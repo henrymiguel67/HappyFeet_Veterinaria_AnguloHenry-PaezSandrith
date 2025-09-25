@@ -1,37 +1,79 @@
 package org.example.model.entities;
 
 public class dueno {
-   public int id ;
-    public String nombre;
-    public String documento_identidad;
-   public String telefono;
-    public String email;
+    private int id;
+    private String nombre;
+    private String documento_identidad;
+    private String telefono;
+    private String email;
 
+    // Constructor vacío
+    public dueno() {}
+
+    // Constructor con id y nombre
     public dueno(int id, String nombre) {
-
+        this.id = id;
+        this.nombre = nombre;
     }
-    public dueno(int id,String nombre,String documento_identidad,String telefono,String email) {
+
+    // Constructor completo
+    public dueno(int id, String nombre, String documento_identidad, String telefono, String email) {
         this.id = id;
         this.nombre = nombre;
         this.documento_identidad = documento_identidad;
         this.telefono = telefono;
         this.email = email;
-
     }
+
+    // Getters y setters
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
+
     public String getNombre() {
         return nombre;
     }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getDocumento_identidad() {
+        return documento_identidad;
+    }
+
+    public void setDocumento_identidad(String documento_identidad) {
+        this.documento_identidad = documento_identidad;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @Override
     public String toString() {
-        dueno d = new dueno(rs.getInt("id"), rs.getString("nombre"));
-        d.id = this.id;
-        d.nombre = this.nombre;
-        return "se añadio un nuevo dueño";
+        return "Dueño{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", documento_identidad='" + documento_identidad + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", email='" + email + '\'' +
+                '}';
     }
 }
