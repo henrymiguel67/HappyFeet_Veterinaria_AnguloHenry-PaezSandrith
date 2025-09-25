@@ -8,7 +8,7 @@ import java.util.List;
 
 
 public class duenoDAO extends iduenoDAO {
-    private Connection connection;
+    private final Connection connection;
 
     public duenoDAO() {
         connection = ConexionSingleton.getInstance().getConnection();
@@ -16,10 +16,10 @@ public class duenoDAO extends iduenoDAO {
 
     public void agregarDueno(dueno dueno) {
         String sql = "INSERT INTO dueno VALUES (?,?,?)";
-        try (PreparedStatement psptm = connection.prepareStatement(sql)) {
-            psptm.setInt(1, dueno.getId());
-            psptm.setString(1, dueno.getNombre());
-            psptm.executeUpdate();
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, dueno.getId());
+            pstmt.setString(1, dueno.getNombre());
+            pstmt.executeUpdate();
         } catch (SQLException e) {
             throw new RuntimeException("ERROR a agregar dueño");
 
@@ -30,8 +30,8 @@ public class duenoDAO extends iduenoDAO {
     public List<dueno> listarTodos() {
         List<dueno> duenos = new ArrayList<>();
         String sql = "SELECT * FROM dueno";
-        try (Statement sttm = connection.createStatement();
-             ResultSet rs = sttm.executeQuery(sql)) {
+        try (Statement stmt = connection.createStatement();
+             ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 dueno dueno = new dueno(rs.getInt("id"),
                         rs.getString("nombre"));
@@ -44,9 +44,10 @@ public class duenoDAO extends iduenoDAO {
         return duenos;
     }
     @Override
-    dueno buscarPorId(Integer integer id){
+    dueno buscarPorId(Integer  id){
         dueno dueno = null;
         String sql = "SELECT * FROM dueno WHERE id = ?";
+
 
 
         try (PreparedStatement stmt = connection.prepareStatement(sql);){
@@ -58,9 +59,35 @@ public class duenoDAO extends iduenoDAO {
             }
 
         }catch (SQLException e){
-            throw new RuntimeException("ERROR a buscar dueno" +id);
+            throw new RuntimeException("ERROR a buscar dueno" + id);
         }
         return dueno;
     }
-}
+    @Override
+    public  void  actulizarDueno(dueno dueno){
+        String sql = "Update  estudiante set nombre = ?, sexo = ?  where id =?";
 
+        try (PreparedStatement pstmt =connection.prepareStatement(sql)){
+            pstmt.setInt(1,dueno.getId());
+            pstmt.setString(1,dueno.getNombre());
+            pstmt.executeUpdate();
+
+
+        } catch (SQLException e) {
+            throw new RuntimeException("ERROR al Actualizar  Duenño" + dueno);
+        }
+    }
+    @Override
+      void  eliminarDueno(Integer id){
+        String sql = "Delete  estudiante From estudiante where id =?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)){
+            pstmt.setInt(1,id);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("ERROR al eliminar dueno ID:" + id);
+        }
+
+    }
+
+}
