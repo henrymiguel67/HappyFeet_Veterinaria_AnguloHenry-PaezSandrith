@@ -7,14 +7,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import java.util.logging.Logger;
+
 public class DuenoDAO extends IDuenoDAO {
     private final Connection connection;
+    private static final Logger logger = Logger.getLogger(DuenoDAO.class.getName());
 
     public DuenoDAO() {
         connection = ConnexionSingleton.getInstance().getConnection();
     }
 
-    public void agregarDueno(Dueno dueno) {
+    public void agregarDueno(Dueno dueno) throws DuenoAddException {
         String sql = "INSERT INTO dueno (id, nombre, telefono, email, documento_identidad) VALUES (?,?,?,?,?)";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
             pstmt.setInt(1, dueno.getId());
@@ -24,15 +27,15 @@ public class DuenoDAO extends IDuenoDAO {
             pstmt.setString(5,dueno.getDocumento_identidad());
             pstmt.executeUpdate();
         } catch (SQLException e) {
-            throw new RuntimeException("ERROR a agregar dueño");
+            throw new DuenoAddException("ERROR a agregar dueño", e);
 
         }
     }
 
     @Override
-    public List<Dueno> listarTodos() {
-        List<Dueno> Lista= new ArrayList<>();
-        String sql = "SELECT * FROM dueno";
+    public List<Dueno> listarTodos() throws DuenoListException {
+        List<Dueno> lista = new ArrayList<>();
+        String sql = "SELECT id, nombre, telefono, email, documento_identidad FROM dueno";
         try (Statement stmt = connection.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
@@ -42,17 +45,17 @@ public class DuenoDAO extends IDuenoDAO {
                         rs.getString("Email"),
                         rs.getString("documento_identidad"));
 
-                Lista.add(dueno);
+                lista.add(dueno);
             }
         } catch (SQLException e) {
-            throw new RuntimeException("ERROR a listar duenos");
+            throw new DuenoListException("ERROR a listar duenos", e);
         }
-        return Lista;
+        return lista;
     }
     @Override
     Dueno buscarPorId(Integer  id){
         Dueno dueno = null;
-        String sql = "SELECT * FROM dueno WHERE id = ?";
+        String sql = "SELECT id, nombre, telefono, email, documento_identidad FROM dueno WHERE id = ?";
 
         try (PreparedStatement stmt = connection.prepareStatement(sql);){
             stmt.setInt(1,id);
@@ -63,7 +66,7 @@ public class DuenoDAO extends IDuenoDAO {
             }
 
         }catch (SQLException e){
-            throw new RuntimeException("ERROR a buscar dueno" + id);
+            throw new DuenoSearchException("ERROR al buscar dueno con ID: " + id, e);
         }
         return dueno;
     }
@@ -75,14 +78,14 @@ public class DuenoDAO extends IDuenoDAO {
             pstmt.setInt(1,dueno.getId());
             pstmt.setString(2,dueno.getNombre());
             pstmt.setString(3,dueno.getDocumento_identidad());
-            pstmt.setString(4,dueno.getTelefono());
+            logger.info("Dueño agregado: " + dueno);
             pstmt.setString(5,dueno.getEmail());
             pstmt.executeUpdate();
-            System.out.println("Dueño agregado:" + dueno);
+            logger.info("Dueño agregado: " + dueno);
 
 
         } catch (SQLException e) {
-            throw new RuntimeException("ERROR al Actualizar  Dueño" + dueno);
+            throw new DuenoUpdateException("ERROR al Actualizar Dueño: " + dueno, e);
         }
     }
     @Override
@@ -93,7 +96,7 @@ public class DuenoDAO extends IDuenoDAO {
             pstmt.executeUpdate();
 
         } catch (SQLException e) {
-            throw new RuntimeException("ERROR al eliminar dueno ID:" + id);
+            throw new DuenoDeleteException("ERROR al eliminar dueno ID:" + id, e);
         }
 
     }
