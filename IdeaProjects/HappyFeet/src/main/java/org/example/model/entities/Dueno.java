@@ -1,6 +1,6 @@
 package org.example.model.entities;
 
-public class dueno {
+public class Dueno {
     private int id;
     private String nombre;
     private String documento_identidad;
@@ -8,16 +8,16 @@ public class dueno {
     private String email;
 
     // Constructor vacío
-    public dueno() {}
+    public Dueno() {}
 
     // Constructor con id y nombre
-    public dueno(int id, String nombre) {
+    public Dueno(int id, String nombre) {
         this.id = id;
         this.nombre = nombre;
     }
 
     // Constructor completo
-    public dueno(int id, String nombre, String documento_identidad, String telefono, String email) {
+    public Dueno(int id, String nombre, String documento_identidad, String telefono, String email) {
         this.id = id;
         this.nombre = nombre;
         this.documento_identidad = documento_identidad;
