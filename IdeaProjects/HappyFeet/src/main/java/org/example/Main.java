@@ -4,12 +4,12 @@ import java.sql.Connection;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        ConexionSingleton conexion = ConexionSingleton.getInstance();
+        ConnexionSingleton connexion = ConnexionSingleton.getInstance();
 
-        Connection conn = conexion.getConnection();
+        Connection conn = connexion.getConnection();
         if (conn != null) {
             System.out.println(" Conectado desde Main.");
         }
-        ConexionSingleton.closeConnection();
+        ConnexionSingleton.closeConnection();
     }
 }
