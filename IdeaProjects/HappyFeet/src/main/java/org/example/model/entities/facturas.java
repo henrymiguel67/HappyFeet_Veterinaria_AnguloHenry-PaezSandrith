@@ -2,16 +2,16 @@ package org.example.model.entities;
 
 import java.util.Date;
 
-public class facturas {
-    public int id;
-    public int dueno_id;
-    public Date fecha_emision;
-    public double total;
+public class Facturas {
+    private int id;
+    private int duenoId;
+    private Date fechaEmision;
+    private double total;
 
-    public facturas(int id, int dueno_id, Date fecha_emision, double total) {
+    public facturas(int id, int duenoId, Date fechaEmision, double total) {
         this.id = id;
-        this.dueno_id = dueno_id;
-        this.fecha_emision = fecha_emision;
+        this.duenoId = duenoId;
+        this.fechaEmision = fechaEmision;
         this.total = total;
     }
 
@@ -23,20 +23,20 @@ public class facturas {
         this.id = id;
     }
 
-    public int getDueno_id() {
-        return dueno_id;
+    public int getDuenoId() {
+        return duenoId;
     }
 
-    public void setDueno_id(int dueno_id) {
-        this.dueno_id = dueno_id;
+    public void setDuenoId(int duenoId) {
+        this.duenoId = duenoId;
     }
 
-    public Date getFecha_emision() {
-        return fecha_emision;
+    public Date getFechaEmision() {
+        return fechaEmision;
     }
 
-    public void setFecha_emision(Date fecha_emision) {
-        this.fecha_emision = fecha_emision;
+    public void setFechaEmision(Date fechaEmision) {
+        this.fechaEmision = fechaEmision;
     }
 
     public double getTotal() {
