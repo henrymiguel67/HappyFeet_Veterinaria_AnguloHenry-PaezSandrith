@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DuenoDAO extends iduenoDAO {
+public class DuenoDAO extends IDuenoDAO {
     private final Connection connection;
 
     public DuenoDAO() {
