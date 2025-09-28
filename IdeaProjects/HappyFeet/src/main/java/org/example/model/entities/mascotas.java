@@ -2,68 +2,105 @@ package org.example.model.entities;
 
 import java.util.Date;
 
-public class mascotas {
-    public int id;
-    public String nombre;
-    public int raza_id;
-    public Date fecha_nacimiento;
-    public char sexo;
-    public String url_foto;
-
-    public mascotas(int id, String nombre, int raza_id, Date fecha_nacimiento, char sexo, String url_foto) {
+public class Mascota {
+    // Atributos PRIVADOS (encapsulación)
+    private int id;
+    private String nombre;
+    private int duenoId;
+    private int razaId;
+    private Date fechaNacimiento;
+    private String sexo; // Cambié de char a String para 'Macho'/'Hembra'
+    private String urlFoto;
+    
+    // Constructor completo
+    public Mascota(int id, String nombre, int duenoId, int razaId, Date fechaNacimiento, String sexo, String urlFoto) {
         this.id = id;
         this.nombre = nombre;
-        this.raza_id = raza_id;
-        this.fecha_nacimiento = fecha_nacimiento;
+        this.duenoId = duenoId;
+        this.razaId = razaId;
+        this.fechaNacimiento = fechaNacimiento;
         this.sexo = sexo;
-        this.url_foto = url_foto;
+        this.urlFoto = urlFoto;
     }
-
+    
+    // Constructor vacío
+    public Mascota() {}
+    
+    // Constructor sin ID (para inserts)
+    public Mascota(String nombre, int duenoId, int razaId, Date fechaNacimiento, String sexo, String urlFoto) {
+        this.nombre = nombre;
+        this.duenoId = duenoId;
+        this.razaId = razaId;
+        this.fechaNacimiento = fechaNacimiento;
+        this.sexo = sexo;
+        this.urlFoto = urlFoto;
+    }
+    
+    // Getters y Setters
     public int getId() {
         return id;
     }
-
+    
     public void setId(int id) {
         this.id = id;
     }
-
+    
     public String getNombre() {
         return nombre;
     }
-
+    
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
-    public int getRaza_id() {
-        return raza_id;
+    
+    public int getDuenoId() {
+        return duenoId;
     }
-
-    public void setRaza_id(int raza_id) {
-        this.raza_id = raza_id;
+    
+    public void setDuenoId(int duenoId) {
+        this.duenoId = duenoId;
     }
-
-    public Date getFecha_nacimiento() {
-        return fecha_nacimiento;
+    
+    public int getRazaId() {
+        return razaId;
     }
-
-    public void setFecha_nacimiento(Date fecha_nacimiento) {
-        this.fecha_nacimiento = fecha_nacimiento;
+    
+    public void setRazaId(int razaId) {
+        this.razaId = razaId;
     }
-
-    public char getSexo() {
+    
+    public Date getFechaNacimiento() {
+        return fechaNacimiento;
+    }
+    
+    public void setFechaNacimiento(Date fechaNacimiento) {
+        this.fechaNacimiento = fechaNacimiento;
+    }
+    
+    public String getSexo() {
         return sexo;
     }
-
-    public void setSexo(char sexo) {
+    
+    public void setSexo(String sexo) {
         this.sexo = sexo;
     }
-
-    public String getUrl_foto() {
-        return url_foto;
+    
+    public String getUrlFoto() {
+        return urlFoto;
     }
-
-    public void setUrl_foto(String url_foto) {
-        this.url_foto = url_foto;
+    
+    public void setUrlFoto(String urlFoto) {
+        this.urlFoto = urlFoto;
+    }
+    
+    @Override
+    public String toString() {
+        return "Mascota{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", duenoId=" + duenoId +
+                ", razaId=" + razaId +
+                ", sexo='" + sexo + '\'' +
+                '}';
     }
 }
