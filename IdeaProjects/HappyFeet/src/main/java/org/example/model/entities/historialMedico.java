@@ -2,45 +2,95 @@ package org.example.model.entities;
 
 import java.util.Date;
 
-public class historialMedico {
-    public int id;
-    public int mascota_id;
-    public Date fecha_evento;
-    public String descricion;
-    public String diagnostico;
-    public String tratamiento_recomendado;
-
-    public historialMedico(int id, int mascota_id, Date fecha_evento, String descricion, String diagnostico, String tratamiento_recomendado) {
+public class HistorialMedico {
+    // Atributos PRIVADOS (encapsulación)
+    private int id;
+    private int mascotaId;
+    private Date fechaEvento;
+    private int eventoTipoId;
+    private String descripcion;
+    private String diagnostico;
+    private String tratamientoRecomendado;
+    
+    // Constructor completo
+    public HistorialMedico(int id, int mascotaId, Date fechaEvento, int eventoTipoId, 
+                          String descripcion, String diagnostico, String tratamientoRecomendado) {
         this.id = id;
-        this.mascota_id = mascota_id;
-        this.fecha_evento = fecha_evento;
-        this.descricion = descricion;
+        this.mascotaId = mascotaId;
+        this.fechaEvento = fechaEvento;
+        this.eventoTipoId = eventoTipoId;
+        this.descripcion = descripcion;
         this.diagnostico = diagnostico;
-        this.tratamiento_recomendado = tratamiento_recomendado;
+        this.tratamientoRecomendado = tratamientoRecomendado;
     }
-    public historialMedico() {}
-
+    
+    // Constructor vacío
+    public HistorialMedico() {}
+    
+    // Getters y Setters (acceso controlado)
     public int getId() {
         return id;
     }
-
-    public int getMascota_id() {
-        return mascota_id;
+    
+    public void setId(int id) {
+        this.id = id;
     }
-
-    public Date getFecha_evento() {
-        return fecha_evento;
+    
+    public int getMascotaId() {
+        return mascotaId;
     }
-
-    public String getDescricion() {
-        return descricion;
+    
+    public void setMascotaId(int mascotaId) {
+        this.mascotaId = mascotaId;
     }
-
+    
+    public Date getFechaEvento() {
+        return fechaEvento;
+    }
+    
+    public void setFechaEvento(Date fechaEvento) {
+        this.fechaEvento = fechaEvento;
+    }
+    
+    public int getEventoTipoId() {
+        return eventoTipoId;
+    }
+    
+    public void setEventoTipoId(int eventoTipoId) {
+        this.eventoTipoId = eventoTipoId;
+    }
+    
+    public String getDescripcion() {
+        return descripcion;
+    }
+    
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+    
     public String getDiagnostico() {
         return diagnostico;
     }
-
-    public String getTratamiento_recomendado() {
-        return tratamiento_recomendado;
+    
+    public void setDiagnostico(String diagnostico) {
+        this.diagnostico = diagnostico;
+    }
+    
+    public String getTratamientoRecomendado() {
+        return tratamientoRecomendado;
+    }
+    
+    public void setTratamientoRecomendado(String tratamientoRecomendado) {
+        this.tratamientoRecomendado = tratamientoRecomendado;
+    }
+    
+    @Override
+    public String toString() {
+        return "HistorialMedico{" +
+                "id=" + id +
+                ", mascotaId=" + mascotaId +
+                ", fechaEvento=" + fechaEvento +
+                ", diagnostico='" + diagnostico + '\'' +
+                '}';
     }
 }
