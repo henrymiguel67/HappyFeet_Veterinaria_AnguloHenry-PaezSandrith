@@ -42,11 +42,11 @@ public class Dueno {
         this.nombre = nombre;
     }
 
-    public String getDocumento_identidad() {
+    public String getDocumentoIdentidad() {
         return documento_identidad;
     }
 
-    public void setDocumento_identidad(String documento_identidad) {
+    public void setDocumentoIdentidad(String documento_identidad) {
         this.documento_identidad = documento_identidad;
     }
 
