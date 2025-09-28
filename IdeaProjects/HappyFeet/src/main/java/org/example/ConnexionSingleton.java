@@ -1,28 +1,36 @@
 package org.example;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
-public class ConnexionSingleton {
-    private static ConnexionSingleton instance;
-    private static Connection connection;
+@SuppressWarnings({"all"})  
+public class ConnectionSingleton {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/";
+    private static ConnectionSingleton instance;
+    private Connection connection;
+
+    private static final String URL = "jdbc:mysql://localhost:3306/happyfeet_veterinaria";
     private static final String USER = "campus2023";
-    private static final String PASS = "campus2023";
+    @SuppressWarnings("all")  
+    private static final String PASSWORD = "campus2023";
 
-    private ConnexionSingleton() {
+    private static final Logger logger = Logger.getLogger(ConnectionSingleton.class.getName());
+
+    private ConnectionSingleton() {
         try {
-            connection = DriverManager.getConnection(URL, USER, PASS);
-            System.out.println(" Conexión exitosa a la base de datos.");
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            logger.info("Conexion establecida con exito!");
         } catch (SQLException e) {
-            System.out.println(" Error al conectar: " + e.getMessage());
+            logger.log(Level.SEVERE, "Error al establecer la conexion.", e);
         }
     }
 
-    public static ConnexionSingleton getInstance() {
+    public static ConnectionSingleton getInstance() {
         if (instance == null) {
-            instance = new ConnexionSingleton();
+            instance = new ConnectionSingleton();
         }
         return instance;
     }
@@ -30,16 +38,4 @@ public class ConnexionSingleton {
     public Connection getConnection() {
         return connection;
     }
-
-    public static void closeConnection() {
-        try {
-            if (connection != null && !connection.isClosed()) {
-                connection.close();
-                System.out.println(" Conexión cerrada correctamente.");
-            }
-        } catch (SQLException e) {
-            System.out.println(" Error al cerrar la conexión: " + e.getMessage());
-        }
-    }
 }
-

@@ -1,37 +1,21 @@
-package mysqlproject;
-
+package org.example;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class DBConnection {
+public class connexion {
 
-    private static final String URL = "jdbc:mysql://localhost:3306/mysql_database";
-    private static final String USER = "root";
-    private static final String PASSWORD = "password"; // Cambia esto por tu contraseña real
+     static void main(String[] args) {
+    String host = "jdbc:mysql://localhost:3306/";
+    String user = "campus2023";
+    String pass = "campus2023";
+    String bd = "HappyFeet";
 
-    public static Connection connect() {
-        Connection conn = null;
-        try {
-            conn = DriverManager.getConnection(URL, USER, PASSWORD);
-            System.out.println("Conexión exitosa a la base de datos.");
-        } catch (SQLException e) {
-            System.out.println("Error al conectar con la base de datos:");
-            e.printStackTrace();
-        }
-        return conn;
+    String strConn = host + bd;
+    try (Connection connection = DriverManager.getConnection(strConn, user, pass)){
+        System.out.println("Conexion exitosa");
+    } catch (SQLException e){
+        System.out.println("Error al conectarse a la base de datos. \n" + e.getMessage());
     }
-
-    public static void main(String[] args) {
-        Connection conn = connect();
-        if (conn != null) {
-            try {
-                conn.close();
-                System.out.println("Conexión cerrada correctamente.");
-            } catch (SQLException e) {
-                System.out.println("Error al cerrar la conexión:");
-                e.printStackTrace();
-            }
-        }
-    }
+}
 }
