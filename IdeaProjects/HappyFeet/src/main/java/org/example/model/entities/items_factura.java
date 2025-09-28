@@ -1,21 +1,21 @@
 package org.example.model.entities;
 
-public class items_factura {
-    public int id;
-    public int id_factura;
-    public int producto_id;
-    public String servicio_descripcion;
-    public  int cantidad;
-    public double precio_unitario;
-    public double subtotal;
+public class ItemsFactura {
+    private int id;
+    private int idFactura;
+    private int productoId;
+    private String servicioDescripcion;
+    private int cantidad;
+    private double precioUnitario;
+    private double subtotal;
 
-    public items_factura(int id, int id_factura, int producto_id, String servicio_descripcion, int cantidad, double precio_unitario, double subtotal) {
+    public items_factura(int id, int idFactura, int productoId, String servicioDescripcion, int cantidad, double precioUnitario, double subtotal) {
         this.id = id;
-        this.id_factura = id_factura;
-        this.producto_id = producto_id;
-        this.servicio_descripcion = servicio_descripcion;
+        this.idFactura = idFactura;
+        this.productoId = productoId;
+        this.servicioDescripcion = servicioDescripcion;
         this.cantidad = cantidad;
-        this.precio_unitario = precio_unitario;
+        this.precioUnitario = precioUnitario;
         this.subtotal = subtotal;
     }
 
@@ -27,28 +27,28 @@ public class items_factura {
         this.id = id;
     }
 
-    public int getId_factura() {
-        return id_factura;
+    public int getIdFactura() {
+        return idFactura;
     }
 
-    public void setId_factura(int id_factura) {
-        this.id_factura = id_factura;
+    public void setIdFactura(int idFactura) {
+        this.idFactura = idFactura;
     }
 
-    public int getProducto_id() {
-        return producto_id;
+    public int getProductoId() {
+        return productoId;
     }
 
-    public void setProducto_id(int producto_id) {
-        this.producto_id = producto_id;
+    public void setProductoId(int productoId) {
+        this.productoId = productoId;
     }
 
-    public String getServicio_descripcion() {
-        return servicio_descripcion;
+    public String getServicioDescripcion() {
+        return servicioDescripcion;
     }
 
-    public void setServicio_descripcion(String servicio_descripcion) {
-        this.servicio_descripcion = servicio_descripcion;
+    public void setServicioDescripcion(String servicioDescripcion) {
+        this.servicioDescripcion = servicioDescripcion;
     }
 
     public int getCantidad() {
@@ -59,12 +59,12 @@ public class items_factura {
         this.cantidad = cantidad;
     }
 
-    public double getPrecio_unitario() {
-        return precio_unitario;
+    public double getPrecioUnitario() {
+        return precioUnitario;
     }
 
-    public void setPrecio_unitario(double precio_unitario) {
-        this.precio_unitario = precio_unitario;
+    public void setPrecioUnitario(double precioUnitario) {
+        this.precioUnitario = precioUnitario;
     }
 
     public double getSubtotal() {
