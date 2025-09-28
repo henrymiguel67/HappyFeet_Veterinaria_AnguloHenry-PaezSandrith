@@ -9,7 +9,7 @@ public class ItemsFactura {
     private double precioUnitario;
     private double subtotal;
 
-    public items_factura(int id, int idFactura, int productoId, String servicioDescripcion, int cantidad, double precioUnitario, double subtotal) {
+    public ItemsFactura(int id, int idFactura, int productoId, String servicioDescripcion, int cantidad, double precioUnitario, double subtotal) {
         this.id = id;
         this.idFactura = idFactura;
         this.productoId = productoId;
