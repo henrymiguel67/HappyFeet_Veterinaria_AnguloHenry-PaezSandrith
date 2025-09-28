@@ -6,6 +6,8 @@ import org.example.model.entities.Repository.DuenoRepositoryException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Implementación del DAO de Dueno usando ConnectionSingleton
@@ -13,6 +15,7 @@ import java.util.List;
 public class DuenoDAO implements IDuenoDAO {
 
     private final Connection connection;
+    private static final Logger logger = Logger.getLogger(DuenoDAO.class.getName());
 
     public DuenoDAO() {
         // Obtenemos la conexión singleton
@@ -34,13 +37,15 @@ public class DuenoDAO implements IDuenoDAO {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        dueno.setId(generatedKeys.getInt(1)); // Asignamos ID generado por MySQL
+                        dueno.setId(generatedKeys.getInt(1));
+                        logger.info("Dueño agregado con ID: " + dueno.getId());
                     }
                 }
             }
 
         } catch (SQLException e) {
-            throw new DuenoRepositoryException("Error al agregar dueño: " + e.getMessage(), e);
+            logger.log(Level.SEVERE, "Error al agregar dueño: " + e.getMessage(), e);
+            throw new DuenoRepositoryException("Error al agregar dueño", e);
         }
     }
 
@@ -64,7 +69,8 @@ public class DuenoDAO implements IDuenoDAO {
             }
 
         } catch (SQLException e) {
-            throw new DuenoRepositoryException("Error al listar dueños: " + e.getMessage(), e);
+            logger.log(Level.SEVERE, "Error al listar dueños: " + e.getMessage(), e);
+            throw new DuenoRepositoryException("Error al listar dueños", e);
         }
 
         return lista;
