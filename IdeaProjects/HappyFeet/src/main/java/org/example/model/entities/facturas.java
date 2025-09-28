@@ -8,7 +8,7 @@ public class Facturas {
     private Date fechaEmision;
     private double total;
 
-    public facturas(int id, int duenoId, Date fechaEmision, double total) {
+    public Facturas(int id, int duenoId, Date fechaEmision, double total) {
         this.id = id;
         this.duenoId = duenoId;
         this.fechaEmision = fechaEmision;
