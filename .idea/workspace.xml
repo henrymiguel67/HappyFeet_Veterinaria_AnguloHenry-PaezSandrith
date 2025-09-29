@@ -7,14 +7,10 @@
     <list default="true" id="7fba1c22-2d23-4a07-9f61-3aa0a6527ea3" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/controller/DuenoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Dueno.java" beforeDir="false" afterPath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Dueno.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/DuenoDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Facturas.java" beforeDir="false" afterPath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Facturas.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/connexion.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/IDuenoDAO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/ItemsFactura.java" beforeDir="false" afterPath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/ItemsFactura.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Mascota.java" beforeDir="false" afterPath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Mascota.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Repository/DuenoRepositoryException.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/citas.java" beforeDir="false" afterPath="$PROJECT_DIR$/IdeaProjects/HappyFeet/src/main/java/org/example/model/entities/Citas.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,30 +28,52 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;junie.onboarding.icon.badge.shown&quot;: &quot;true&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Documento/HappyFeet_Veterinaria_AnguloHenry-PaezSandrith-1&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;to.speed.mode.migration.done&quot;: &quot;true&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "Application.Main.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/Documento/HappyFeet_Veterinaria_AnguloHenry-PaezSandrith-1",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "project.propCompiler",
+    "to.speed.mode.migration.done": "true",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="happyfeet-veterinaria" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -71,7 +89,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1759102810637</updated>
-      <workItem from="1759102812007" duration="2094000" />
+      <workItem from="1759102812007" duration="3190000" />
     </task>
     <servers />
   </component>

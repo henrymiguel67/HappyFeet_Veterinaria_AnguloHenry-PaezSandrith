@@ -1,8 +1,6 @@
 package org.example.Repository;
 
 import org.example.ConnectionSingleton;
-import org.example.Repository.IDuenoDAO;
-import org.example.Repository.DuenoRepositoryException;
 import org.example.model.entities.Dueno;
 
 import java.sql.*;
