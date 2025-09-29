@@ -1,6 +1,10 @@
 package org.example.model.entities;
 
+/**
+ * Clase que representa un item de factura en la veterinaria Happy Feet
+ */
 public class ItemsFactura {
+
     private int id;
     private int idFactura;
     private int productoId;
@@ -9,7 +13,9 @@ public class ItemsFactura {
     private double precioUnitario;
     private double subtotal;
 
-    public ItemsFactura(int id, int idFactura, int productoId, String servicioDescripcion, int cantidad, double precioUnitario, double subtotal) {
+    // Constructor
+    public ItemsFactura(int id, int idFactura, int productoId, String servicioDescripcion,
+                        int cantidad, double precioUnitario, double subtotal) {
         this.id = id;
         this.idFactura = idFactura;
         this.productoId = productoId;
@@ -19,6 +25,7 @@ public class ItemsFactura {
         this.subtotal = subtotal;
     }
 
+    // Getters y setters
     public int getId() {
         return id;
     }
@@ -73,5 +80,18 @@ public class ItemsFactura {
 
     public void setSubtotal(double subtotal) {
         this.subtotal = subtotal;
+    }
+
+    @Override
+    public String toString() {
+        return "ItemsFactura{" +
+                "id=" + id +
+                ", idFactura=" + idFactura +
+                ", productoId=" + productoId +
+                ", servicioDescripcion='" + servicioDescripcion + '\'' +
+                ", cantidad=" + cantidad +
+                ", precioUnitario=" + precioUnitario +
+                ", subtotal=" + subtotal +
+                '}';
     }
 }

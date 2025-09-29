@@ -1,49 +1,36 @@
 package org.example.model.entities;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Facturas {
     private int id;
-    private int duenoId;
-    private Date fechaEmision;
-    private double total;
+    private int DuenoId;
+    private LocalDateTime FechaEmision;
+    private double Total;
 
-    public Facturas(int id, int duenoId, Date fechaEmision, double total) {
+    public Facturas(int id, int duenoId, LocalDateTime fechaEmision, double total) {
         this.id = id;
-        this.duenoId = duenoId;
-        this.fechaEmision = fechaEmision;
-        this.total = total;
+        this.DuenoId = duenoId;
+        this.FechaEmision = fechaEmision;
+        this.Total = total;
     }
 
-    public int getId() {
-        return id;
-    }
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+    public int getDuenoId() { return DuenoId; }
+    public void setDuenoId(int duenoId) { this.DuenoId = duenoId; }
+    public LocalDateTime getFechaEmision() { return FechaEmision; }
+    public void setFechaEmision(LocalDateTime fechaEmision) { this.FechaEmision = fechaEmision; }
+    public double getTotal() { return Total; }
+    public void setTotal(double total) { this.Total = total; }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getDuenoId() {
-        return duenoId;
-    }
-
-    public void setDuenoId(int duenoId) {
-        this.duenoId = duenoId;
-    }
-
-    public Date getFechaEmision() {
-        return fechaEmision;
-    }
-
-    public void setFechaEmision(Date fechaEmision) {
-        this.fechaEmision = fechaEmision;
-    }
-
-    public double getTotal() {
-        return total;
-    }
-
-    public void setTotal(double total) {
-        this.total = total;
+    @Override
+    public String toString() {
+        return "Factura{" +
+                "id=" + id +
+                ", duenoId=" + DuenoId +
+                ", fechaEmision=" + FechaEmision +
+                ", total=" + Total +
+                '}';
     }
 }

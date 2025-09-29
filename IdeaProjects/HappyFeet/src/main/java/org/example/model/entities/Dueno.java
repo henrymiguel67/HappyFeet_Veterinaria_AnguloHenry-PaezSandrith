@@ -17,15 +17,14 @@ public class Dueno {
 
     // Getters y setters
     public int getId() { return id; }
-    public String getNombre() { return nombre; }
-    public String getTelefono() { return telefono; }
-    public String getEmail() { return email; }
-    public String getDocumentoIdentidad() { return documentoIdentidad; }
-
     public void setId(int id) { this.id = id; }
+    public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+    public String getTelefono() { return telefono; }
     public void setTelefono(String telefono) { this.telefono = telefono; }
+    public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
+    public String getDocumentoIdentidad() { return documentoIdentidad; }
     public void setDocumentoIdentidad(String documentoIdentidad) { this.documentoIdentidad = documentoIdentidad; }
 
     @Override
