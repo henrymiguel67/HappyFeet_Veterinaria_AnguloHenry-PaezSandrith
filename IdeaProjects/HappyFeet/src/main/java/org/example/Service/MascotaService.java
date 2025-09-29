@@ -1,7 +1,7 @@
 package org.example.Service;
 
 import org.example.model.entities.Mascota;
-import org.example.repository.MascotaDAO;
+import org.example.Repository.MascotaDAO;
 import java.util.List;
 import java.util.Optional;
 

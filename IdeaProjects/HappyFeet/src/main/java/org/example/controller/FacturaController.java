@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.model.entities.Factura;
-import org.example.service.FacturaService;
+import org.example.Service.FacturaService;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;

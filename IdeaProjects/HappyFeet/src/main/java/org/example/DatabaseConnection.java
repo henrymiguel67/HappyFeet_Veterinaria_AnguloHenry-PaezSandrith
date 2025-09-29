@@ -7,21 +7,21 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * ConnectionSingleton: Clase que gestiona una única conexión a la base de datos
+ * DatabaseConnection: Clase que gestiona una única conexión a la base de datos
  * para todo el proyecto.
  */
-public class ConnectionSingleton {
+public class DatabaseConnection {
 
-    private static ConnectionSingleton instance;
+    private static DatabaseConnection instance;
     private Connection connection;
 
     private static final String URL = "jdbc:mysql://localhost:3306/HappyFeet";
     private static final String USER = "campus2023";
     private static final String PASSWORD = "campus2023";
 
-    private static final Logger logger = Logger.getLogger(ConnectionSingleton.class.getName());
+    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
 
-    private ConnectionSingleton() {
+    private DatabaseConnection() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -33,9 +33,9 @@ public class ConnectionSingleton {
         }
     }
 
-    public static synchronized ConnectionSingleton getInstance() {
+    public static synchronized DatabaseConnection getInstance() {
         if (instance == null) {
-            instance = new ConnectionSingleton();
+            instance = new DatabaseConnection();
         }
         return instance;
     }
@@ -43,7 +43,7 @@ public class ConnectionSingleton {
     public Connection getConnection() {
         try {
             if (connection == null || connection.isClosed()) {
-                instance = new ConnectionSingleton(); // reabrir conexión si estaba cerrada
+                instance = new DatabaseConnection(); // reabrir conexión si estaba cerrada
             }
         } catch (SQLException e) {
             logger.log(Level.SEVERE, "❌ Error verificando la conexión.", e);
@@ -62,3 +62,4 @@ public class ConnectionSingleton {
         }
     }
 }
+

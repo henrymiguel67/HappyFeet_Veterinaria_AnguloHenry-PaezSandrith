@@ -1,6 +1,7 @@
 package org.example.Repository;
 
-import org.example.ConnectionSingleton;
+import org.example.DatabaseConnection;
+
 import org.example.model.entities.Dueno;
 
 import java.sql.*;
@@ -15,7 +16,7 @@ public class DuenoDAO implements IDuenoDAO {
     private static final Logger logger = Logger.getLogger(DuenoDAO.class.getName());
 
     public DuenoDAO() {
-        this.connection = ConnectionSingleton.getInstance().getConnection();
+        this.connection = DatabaseConnection.getInstance().getConnection();
     }
 
     @Override

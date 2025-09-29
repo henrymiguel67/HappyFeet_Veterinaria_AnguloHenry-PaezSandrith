@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.Repository;
 
 import org.example.model.entities.Inventario;
 import java.util.List;

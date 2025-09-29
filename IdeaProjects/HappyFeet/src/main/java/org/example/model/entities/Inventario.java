@@ -3,29 +3,41 @@ package org.example.model.entities;
 import java.util.Date;
 
 public class Inventario {
-    private int id;
-    private String nombreProducto;
-    public int producto_tipo_id;
-    public String descripcion;
-    public String fabricante;
-    public String lote;
-    public int cantidad_stock;
-    public int stock_minimo;
-    public Date fecha_Vencimiento;
-    public double precio_venta;
+    private final int id;
+    private final String nombreProducto;
+    private final int productoTipoId;
+    private final String descripcion;
+    private final String fabricante;
+    private final String lote;
+    private final int cantidadStock;
+    private final int stockMinimo;
+    private final Date fechaVencimiento;
+    private final double precioVenta;
 
-    // Builder pattern to avoid too many constructor parameters
+    private Inventario(Builder builder) {
+        this.id = builder.id;
+        this.nombreProducto = builder.nombreProducto;
+        this.productoTipoId = builder.productoTipoId;
+        this.descripcion = builder.descripcion;
+        this.fabricante = builder.fabricante;
+        this.lote = builder.lote;
+        this.cantidadStock = builder.cantidadStock;
+        this.stockMinimo = builder.stockMinimo;
+        this.fechaVencimiento = builder.fechaVencimiento;
+        this.precioVenta = builder.precioVenta;
+    }
+
     public static class Builder {
         private int id;
         private String nombreProducto;
-        private int producto_tipo_id;
+        private int productoTipoId;
         private String descripcion;
         private String fabricante;
         private String lote;
-        private int cantidad_stock;
-        private int stock_minimo;
-        private Date fecha_Vencimiento;
-        private double precio_venta;
+        private int cantidadStock;
+        private int stockMinimo;
+        private Date fechaVencimiento;
+        private double precioVenta;
 
         public Builder setId(int id) {
             this.id = id;
@@ -37,8 +49,8 @@ public class Inventario {
             return this;
         }
 
-        public Builder setProducto_tipo_id(int producto_tipo_id) {
-            this.producto_tipo_id = producto_tipo_id;
+        public Builder setProductoTipoId(int productoTipoId) {
+            this.productoTipoId = productoTipoId;
             return this;
         }
 
@@ -57,121 +69,76 @@ public class Inventario {
             return this;
         }
 
-        public Builder setCantidad_stock(int cantidad_stock) {
-            this.cantidad_stock = cantidad_stock;
+        public Builder setCantidadStock(int cantidadStock) {
+            this.cantidadStock = cantidadStock;
             return this;
         }
 
-        public Builder setStock_minimo(int stock_minimo) {
-            this.stock_minimo = stock_minimo;
+        public Builder setStockMinimo(int stockMinimo) {
+            this.stockMinimo = stockMinimo;
             return this;
         }
 
-        public Builder setFecha_Vencimiento(Date fecha_Vencimiento) {
-            this.fecha_Vencimiento = fecha_Vencimiento;
+        public Builder setFechaVencimiento(Date fechaVencimiento) {
+            this.fechaVencimiento = fechaVencimiento;
             return this;
         }
 
-        public Builder setPrecio_venta(double precio_venta) {
-            this.precio_venta = precio_venta;
+        public Builder setPrecioVenta(double precioVenta) {
+            this.precioVenta = precioVenta;
             return this;
         }
 
         public Inventario build() {
+            // Validaciones
+            if (cantidadStock < 0) {
+                throw new IllegalArgumentException("La cantidad en stock no puede ser negativa");
+            }
+            if (fechaVencimiento != null && fechaVencimiento.before(new Date())) {
+                throw new IllegalArgumentException("La fecha de vencimiento no puede ser anterior a la fecha actual");
+            }
             return new Inventario(this);
         }
     }
 
-    private Inventario(Builder builder) {
-        this.id = builder.id;
-        this.nombreProducto = builder.nombreProducto;
-        this.producto_tipo_id = builder.producto_tipo_id;
-        this.descripcion = builder.descripcion;
-        this.fabricante = builder.fabricante;
-        this.lote = builder.lote;
-        this.cantidad_stock = builder.cantidad_stock;
-        this.stock_minimo = builder.stock_minimo;
-        this.fecha_Vencimiento = builder.fecha_Vencimiento;
-        this.precio_venta = builder.precio_venta;
-    }
-
+    // Métodos getter
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public String getNombreProducto() {
         return nombreProducto;
     }
 
-    public void setNombreProducto(String nombreProducto) {
-        this.nombreProducto = nombreProducto;
-    }
-
-    public int getProducto_tipo_id() {
-        return producto_tipo_id;
-    }
-
-    public void setProducto_tipo_id(int producto_tipo_id) {
-        this.producto_tipo_id = producto_tipo_id;
+    public int getProductoTipoId() {
+        return productoTipoId;
     }
 
     public String getDescripcion() {
         return descripcion;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
     public String getFabricante() {
         return fabricante;
-    }
-
-    public void setFabricante(String fabricante) {
-        this.fabricante = fabricante;
     }
 
     public String getLote() {
         return lote;
     }
 
-    public void setLote(String lote) {
-        this.lote = lote;
+    public int getCantidadStock() {
+        return cantidadStock;
     }
 
-    public int getCantidad_stock() {
-        return cantidad_stock;
+    public int getStockMinimo() {
+        return stockMinimo;
     }
 
-    public void setCantidad_stock(int cantidad_stock) {
-        this.cantidad_stock = cantidad_stock;
+    public Date getFechaVencimiento() {
+        return fechaVencimiento;
     }
 
-    public int getStock_minimo() {
-        return stock_minimo;
-    }
-
-    public void setStock_minimo(int stock_minimo) {
-        this.stock_minimo = stock_minimo;
-    }
-
-    public Date getFecha_Vencimiento() {
-        return fecha_Vencimiento;
-    }
-
-    public void setFecha_Vencimiento(Date fecha_Vencimiento) {
-        this.fecha_Vencimiento = fecha_Vencimiento;
-    }
-
-    public double getPrecio_venta() {
-        return precio_venta;
-    }
-
-    public void setPrecio_venta(double precio_venta) {
-        this.precio_venta = precio_venta;
+    public double getPrecioVenta() {
+        return precioVenta;
     }
 }

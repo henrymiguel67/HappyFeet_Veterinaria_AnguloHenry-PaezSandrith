@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.model.entities.Inventario;
-import org.example.service.InventarioService;
+import org.example.Service.InventarioService;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -17,30 +17,40 @@ public class InventarioController {
 
     // CREATE - Agregar nuevo producto
     public boolean agregarProducto(String nombreProducto, Integer productoTipoId, String descripcion,
-                                  String fabricante, String lote, Integer cantidadStock, 
-                                  Integer stockMinimo, java.util.Date fechaVencimiento, Double precioVenta) {
-        try {
-            Inventario producto = new Inventario();
-            producto.setNombreProducto(nombreProducto);
-            producto.setProductoTipoId(productoTipoId);
-            producto.setDescripcion(descripcion);
-            producto.setFabricante(fabricante);
-            producto.setLote(lote);
-            producto.setCantidadStock(cantidadStock);
-            producto.setStockMinimo(stockMinimo);
-            producto.setFechaVencimiento(fechaVencimiento);
-            producto.setPrecioVenta(precioVenta);
+    String fabricante, String lote, Integer cantidadStock, 
+    Integer stockMinimo, java.util.Date fechaVencimiento, Double precioVenta) {
+try {
+// Validar datos antes (puedes usar tu método validarDatosProducto)
+if (!validarDatosProducto(nombreProducto, productoTipoId, cantidadStock, stockMinimo, precioVenta)) {
+logger.warning("❌ Datos inválidos para el producto: " + nombreProducto);
+return false;
+}
 
-            inventarioService.agregarProducto(producto);
-            logger.info("✅ Producto agregado exitosamente: " + nombreProducto);
-            return true;
-            
-        } catch (Exception e) {
-            logger.log(Level.SEVERE, "❌ Error al agregar producto: " + e.getMessage(), e);
-            return false;
-        }
-    }
+Inventario producto = new Inventario.Builder()
+.setNombreProducto(nombreProducto)
+.setProductoTipoId(productoTipoId)
+.setDescripcion(descripcion)
+.setFabricante(fabricante)
+.setLote(lote)
+.setCantidadStock(cantidadStock)
+.setStockMinimo(stockMinimo)
+.setFechaVencimiento(fechaVencimiento)
+.setPrecioVenta(precioVenta)
+.build();
 
+inventarioService.agregarProducto(producto);
+logger.info("✅ Producto agregado exitosamente: " + nombreProducto);
+return true;
+
+} catch (IllegalArgumentException e) {
+logger.warning("❌ Validación fallida al agregar producto: " + e.getMessage());
+return false;
+
+} catch (Exception e) {
+logger.log(Level.SEVERE, "❌ Error al agregar producto: " + e.getMessage(), e);
+return false;
+}
+}
     // READ - Listar todos los productos
     public List<Inventario> listarTodosLosProductos() {
         try {
