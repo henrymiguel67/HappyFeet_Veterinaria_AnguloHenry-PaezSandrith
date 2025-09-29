@@ -30,7 +30,6 @@ public class DuenoService {
         if (dueno == null) return false;
         if (dueno.getNombre() == null || dueno.getNombre().isEmpty()) return false;
         if (dueno.getTelefono() == null || dueno.getTelefono().isEmpty()) return false;
-        else (dueno.getDocumentoIdentidad() == null || dueno.getDocumentoIdentidad().isEmpty()) return false;
-        return true;
+        return dueno.getDocumentoIdentidad() != null && !dueno.getDocumentoIdentidad().isEmpty();
     }
 }

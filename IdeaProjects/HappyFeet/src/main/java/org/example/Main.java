@@ -45,14 +45,8 @@ public class Main {
                 System.out.println("5. 📦 Gestión de Inventario");
                 System.out.println("0. 🚪 Salir");
                 System.out.print("Seleccione una opción: ");
-                
-                try {
-                    opcion = Integer.parseInt(scanner.nextLine());
-                } catch (NumberFormatException e) {
-                    System.out.println("❌ Por favor, ingrese un número válido.");
-                    opcion = -1;
-                    continue;
-                }
+
+                opcion = leerOpcion(scanner);
 
                 switch (opcion) {
                     case 1:
@@ -88,17 +82,24 @@ public class Main {
         }
     }
 
-    private static void gestionarDuenos(Scanner scanner, DuenoController controller, View view, DuenoDAO dao) {
-        int opcion;
-        do {
-            view.mostrarMenu();
+    // Método para leer una opción con validación
+    private static int leerOpcion(Scanner scanner) {
+        int opcion = -1;
+        while (opcion == -1) {
             try {
                 opcion = Integer.parseInt(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("❌ Por favor, ingrese un número válido.");
-                opcion = -1;
-                continue;
             }
+        }
+        return opcion;
+    }
+
+    private static void gestionarDuenos(Scanner scanner, DuenoController controller, View view, DuenoDAO dao) {
+        int opcion;
+        do {
+            view.mostrarMenu();
+            opcion = leerOpcion(scanner);
 
             switch (opcion) {
                 case 1: // Agregar dueño
@@ -113,7 +114,7 @@ public class Main {
                     System.out.print("🏠 Dirección: ");
                     String direccion = scanner.nextLine();
 
-                    Dueno dueno = new Dueno(0, nombre, telefono, email, doc, direccion);
+                    Dueno dueno = new Dueno(0, "nombre", "telefono", "email", "doc");
                     try {
                         controller.agregarDueno(dueno);
                         System.out.println("✅ Dueño agregado correctamente.");
@@ -146,13 +147,7 @@ public class Main {
         int opcion;
         do {
             view.mostrarMenu();
-            try {
-                opcion = Integer.parseInt(scanner.nextLine());
-            } catch (NumberFormatException e) {
-                System.out.println("❌ Por favor, ingrese un número válido.");
-                opcion = -1;
-                continue;
-            }
+            opcion = leerOpcion(scanner);
 
             switch (opcion) {
                 case 1: // Agregar item

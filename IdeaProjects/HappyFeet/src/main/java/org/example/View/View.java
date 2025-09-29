@@ -1,5 +1,8 @@
 package org.example.View;
 
+import org.example.model.entities.Dueno;
+
+import java.util.List;
 import java.util.Scanner;
 
 public class View {
@@ -57,5 +60,30 @@ public class View {
         System.out.println("\n--- Gestión de Dueños ---");
         // Aquí integrarás DuenoController
         System.out.println("Funcionalidad en desarrollo...");
+    }
+
+    public void mostrarDuenos(List<Dueno> duenos) {
+        if (duenos == null || duenos.isEmpty()) {
+            System.out.println("❌ No se encontraron dueños.");
+        } else {
+            System.out.println("\n===== Lista de Dueños =====");
+            for (Dueno dueno : duenos) {
+                System.out.println("ID: " + dueno.getId());
+                System.out.println("Nombre: " + dueno.getNombre());
+                System.out.println("Teléfono: " + dueno.getTelefono());
+                System.out.println("Email: " + dueno.getEmail());
+                System.out.println("Documento de Identidad: " + dueno.getDocumentoIdentidad());
+                System.out.println("------------------------------------");
+            }
+        }
+    }
+
+    // Otros métodos para la vista...
+    public void mostrarMenu() {
+        System.out.println("\n===== Menú de Gestión de Dueños =====");
+        System.out.println("1. Agregar nuevo dueño");
+        System.out.println("2. Listar todos los dueños");
+        System.out.println("0. Volver al menú principal");
+        System.out.print("Seleccione una opción: ");
     }
 }

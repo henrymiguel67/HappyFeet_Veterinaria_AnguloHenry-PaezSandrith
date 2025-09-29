@@ -29,7 +29,7 @@ public class ViewItemsFactura {
         logger.info("\n--- Lista de Items de Factura ---");
         for (ItemsFactura item : items) {
             logger.info("ID: " + item.getId());
-            logger.info("Factura ID: " + item.getFacturaId());
+            logger.info("Factura ID: " + item.getIdFactura());
             logger.info("Producto ID: " + item.getProductoId());
             logger.info("Descripción: " + item.getServicioDescripcion());
             logger.info("Cantidad: " + item.getCantidad());
