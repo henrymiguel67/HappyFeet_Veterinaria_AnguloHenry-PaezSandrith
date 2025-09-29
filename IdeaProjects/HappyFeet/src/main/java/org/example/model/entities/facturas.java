@@ -2,35 +2,32 @@ package org.example.model.entities;
 
 import java.time.LocalDateTime;
 
-public class Facturas {
-    private int id;
-    private int DuenoId;
-    private LocalDateTime FechaEmision;
-    private double Total;
+public class Factura {
 
-    public Facturas(int id, int duenoId, LocalDateTime fechaEmision, double total) {
+    private String id;
+    private LocalDateTime fechaEmision;
+    private double total;
+
+    public Factura(String id, LocalDateTime fechaEmision, double total) {
         this.id = id;
-        this.DuenoId = duenoId;
-        this.FechaEmision = fechaEmision;
-        this.Total = total;
+        this.fechaEmision = fechaEmision;
+        this.total = total;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public int getDuenoId() { return DuenoId; }
-    public void setDuenoId(int duenoId) { this.DuenoId = duenoId; }
-    public LocalDateTime getFechaEmision() { return FechaEmision; }
-    public void setFechaEmision(LocalDateTime fechaEmision) { this.FechaEmision = fechaEmision; }
-    public double getTotal() { return Total; }
-    public void setTotal(double total) { this.Total = total; }
+    public String getId() { return id; }
+    public LocalDateTime getFechaEmision() { return fechaEmision; }
+    public double getTotal() { return total; }
+
+    public void setId(String id) { this.id = id; }
+    public void setFechaEmision(LocalDateTime fechaEmision) { this.fechaEmision = fechaEmision; }
+    public void setTotal(double total) { this.total = total; }
 
     @Override
     public String toString() {
         return "Factura{" +
-                "id=" + id +
-                ", duenoId=" + DuenoId +
-                ", fechaEmision=" + FechaEmision +
-                ", total=" + Total +
+                "id='" + id + '\'' +
+                ", fechaEmision=" + fechaEmision +
+                ", total=" + total +
                 '}';
     }
 }
