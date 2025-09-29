@@ -114,6 +114,3 @@ INSERT INTO items_factura (factura_id, producto_id, servicio_descripcion, cantid
 (4, 5, NULL, 1, 15.75, 15.75),
 (4, 4, NULL, 3, 1.20, 3.60),
 (4, NULL, 'Vendaje y curación', 1, 31.40, 31.40);
-
--- Mensaje de confirmación
-SELECT '✅ Datos de prueba insertados correctamente' AS Estado;
