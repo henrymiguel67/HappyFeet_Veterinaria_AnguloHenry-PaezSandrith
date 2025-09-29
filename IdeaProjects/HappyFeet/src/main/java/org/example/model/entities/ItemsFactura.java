@@ -1,8 +1,5 @@
 package org.example.model.entities;
 
-/**
- * Clase que representa un item de factura en la veterinaria Happy Feet
- */
 public class ItemsFactura {
 
     private int id;
