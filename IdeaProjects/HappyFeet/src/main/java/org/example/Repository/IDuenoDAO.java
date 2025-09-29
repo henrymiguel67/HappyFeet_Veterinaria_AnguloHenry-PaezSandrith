@@ -1,6 +1,6 @@
 package org.example.Repository;
 
-import org.example.Repository.DuenoRepositoryException;
+
 import org.example.model.entities.Dueno;
 import java.util.List;
 
