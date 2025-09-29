@@ -20,9 +20,7 @@ public class Main {
     public static void main(String[] args) {
         logger.info("🚀 Iniciando Sistema Happy Feet Veterinaria...");
 
-        Scanner scanner = new Scanner(System.in);
-
-        try {
+        try (Scanner scanner = new Scanner(System.in)) {
             // Inicializamos DAOs
             DuenoDAO duenoDAO = new DuenoDAO();
             ItemsFacturaDAO itemsDAO = new ItemsFacturaDAO();
@@ -77,7 +75,6 @@ public class Main {
             logger.log(Level.SEVERE, "❌ Error crítico en la aplicación: " + e.getMessage(), e);
             System.out.println("❌ La aplicación encontró un error inesperado.");
         } finally {
-            scanner.close();
             logger.info("🔴 Aplicación finalizada");
         }
     }
@@ -104,15 +101,13 @@ public class Main {
             switch (opcion) {
                 case 1: // Agregar dueño
                     System.out.print("👤 Nombre completo: ");
-                    String nombre = scanner.nextLine();
+                    scanner.nextLine();
                     System.out.print("📞 Teléfono: ");
-                    String telefono = scanner.nextLine();
+                    scanner.nextLine();
                     System.out.print("📧 Email: ");
-                    String email = scanner.nextLine();
+                    scanner.nextLine();
                     System.out.print("🆔 Documento de identidad: ");
-                    String doc = scanner.nextLine();
-                    System.out.print("🏠 Dirección: ");
-                    String direccion = scanner.nextLine();
+                    scanner.nextLine();
 
                     Dueno dueno = new Dueno(0, "nombre", "telefono", "email", "doc");
                     try {
