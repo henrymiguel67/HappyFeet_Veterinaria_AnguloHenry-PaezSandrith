@@ -1,4 +1,4 @@
-package org.example.repository;
+package org.example.Repository;
 
 public class FacturaRepositoryException extends RuntimeException {
     
