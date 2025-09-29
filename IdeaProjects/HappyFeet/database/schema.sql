@@ -114,3 +114,4 @@ CREATE TABLE items_factura (
     FOREIGN KEY (factura_id) REFERENCES facturas(id),
     FOREIGN KEY (producto_id) REFERENCES inventario(id)
 );
+
