@@ -223,20 +223,28 @@ public class FacturaDAO implements IFacturaDAO {
         return 0.0;
     }
 
-    @Override
-    public Integer contarFacturasPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
-        String sql = "SELECT COUNT(*) FROM facturas WHERE fecha_emision BETWEEN ? AND ?";
+ @Override
+public Integer contarFacturasPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+    String sql = "SELECT COUNT(*) FROM facturas WHERE fecha_emision BETWEEN ? AND ?";
 
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+    try (Connection conn = DatabaseConnection.getInstance().getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setTimestamp(1, Timestamp.valueOf(fechaInicio));
-            stmt.setTimestamp(2, Timestamp.valueOf(fechaFin));
-            try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getInt(1);
-                }
+        stmt.setTimestamp(1, Timestamp.valueOf(fechaInicio));
+        stmt.setTimestamp(2, Timestamp.valueOf(fechaFin));
+        
+        try (ResultSet rs = stmt.executeQuery()) {
+            if (rs.next()) {
+                return rs.getInt(1);
             }
+            return 0; 
+        }
+    } catch (SQLException e) {
+       
+        e.printStackTrace();
+        return null; 
+    }
+}
             // Método auxiliar para mapear un ResultSet a un objeto Factura
 private Factura mapResultSetToFactura(ResultSet rs) throws SQLException {
     Factura factura = new Factura();

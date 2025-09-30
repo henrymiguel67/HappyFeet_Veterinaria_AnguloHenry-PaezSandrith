@@ -45,58 +45,80 @@ public class Inventario {
         }
 
         public Builder setNombreProducto(String nombreProducto) {
+            if (nombreProducto == null || nombreProducto.trim().isEmpty()) {
+                throw new IllegalArgumentException("El nombre del producto no puede estar vacío");
+            }
             this.nombreProducto = nombreProducto;
             return this;
         }
 
         public Builder setProductoTipoId(int productoTipoId) {
+            if (productoTipoId <= 0) {
+                throw new IllegalArgumentException("El ID del tipo de producto debe ser positivo");
+            }
             this.productoTipoId = productoTipoId;
             return this;
         }
 
         public Builder setDescripcion(String descripcion) {
-            this.descripcion = descripcion;
+            this.descripcion = descripcion; // Descripción puede ser opcional
             return this;
         }
 
         public Builder setFabricante(String fabricante) {
-            this.fabricante = fabricante;
+            this.fabricante = fabricante; // Fabricante puede ser opcional
             return this;
         }
 
         public Builder setLote(String lote) {
-            this.lote = lote;
+            this.lote = lote; // Lote puede ser opcional
             return this;
         }
 
         public Builder setCantidadStock(int cantidadStock) {
+            if (cantidadStock < 0) {
+                throw new IllegalArgumentException("La cantidad en stock no puede ser negativa");
+            }
             this.cantidadStock = cantidadStock;
             return this;
         }
 
         public Builder setStockMinimo(int stockMinimo) {
+            if (stockMinimo < 0) {
+                throw new IllegalArgumentException("El stock mínimo no puede ser negativo");
+            }
             this.stockMinimo = stockMinimo;
             return this;
         }
 
         public Builder setFechaVencimiento(Date fechaVencimiento) {
-            this.fechaVencimiento = fechaVencimiento;
+            this.fechaVencimiento = fechaVencimiento; // Puede ser null (productos sin vencimiento)
             return this;
         }
 
         public Builder setPrecioVenta(double precioVenta) {
+            if (precioVenta < 0) {
+                throw new IllegalArgumentException("El precio de venta no puede ser negativo");
+            }
             this.precioVenta = precioVenta;
             return this;
         }
 
         public Inventario build() {
-            // Validaciones
-            if (cantidadStock < 0) {
-                throw new IllegalArgumentException("La cantidad en stock no puede ser negativa");
+            // Validaciones adicionales
+            if (nombreProducto == null) {
+                throw new IllegalStateException("El nombre del producto es obligatorio");
+            }
+            if (productoTipoId <= 0) {
+                throw new IllegalStateException("El tipo de producto es obligatorio");
+            }
+            if (cantidadStock < stockMinimo) {
+                throw new IllegalStateException("El stock no puede ser menor al stock mínimo");
             }
             if (fechaVencimiento != null && fechaVencimiento.before(new Date())) {
-                throw new IllegalArgumentException("La fecha de vencimiento no puede ser anterior a la fecha actual");
+                throw new IllegalStateException("La fecha de vencimiento no puede ser anterior a la fecha actual");
             }
+            
             return new Inventario(this);
         }
     }
@@ -135,7 +157,7 @@ public class Inventario {
     }
 
     public Date getFechaVencimiento() {
-        return fechaVencimiento;
+        return fechaVencimiento != null ? new Date(fechaVencimiento.getTime()) : null;
     }
 
     public double getPrecioVenta() {

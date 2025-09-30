@@ -11,39 +11,42 @@ import java.util.Optional;
 
 public class InventarioDAO implements IInventarioDAO {
     
-    @Override
-    public void agregarProducto(Inventario producto) {
-        String sql = "INSERT INTO inventario (nombre_producto, producto_tipo_id, descripcion, " +
-                     "fabricante, lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-    
-        try (Connection conn = DatabaseConnection.getInstance().getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
-    
-            stmt.setString(1, producto.getNombreProducto());
-            stmt.setInt(2, producto.getProductoTipoId());
-            stmt.setString(3, producto.getDescripcion());
-            stmt.setString(4, producto.getFabricante());
-            stmt.setString(5, producto.getLote());
-            stmt.setInt(6, producto.getCantidadStock());
-            stmt.setInt(7, producto.getStockMinimo());
-            stmt.setDate(8, producto.getFechaVencimiento() != null ? 
-                          new java.sql.Date(producto.getFechaVencimiento().getTime()) : null);
-            stmt.setDouble(9, producto.getPrecioVenta());
-    
-            int affectedRows = stmt.executeUpdate();
-            if (affectedRows > 0) {
-                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                    if (generatedKeys.next()) {
-                        producto.setId(generatedKeys.getInt(1));
-                    }
+@Override
+public Inventario agregarProducto(Inventario producto) {
+    String sql = "INSERT INTO inventario (nombre_producto, producto_tipo_id, descripcion, " +
+                 "fabricante, lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta) " +
+                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+    try (Connection conn = DatabaseConnection.getInstance().getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+
+        // ... (configurar parámetros igual que antes)
+
+        int affectedRows = stmt.executeUpdate();
+        if (affectedRows > 0) {
+            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    // Crear y devolver una nueva instancia con el ID actualizado
+                    return new Inventario.Builder()
+                            .setId(generatedKeys.getInt(1))
+                            .setNombreProducto(producto.getNombreProducto())
+                            .setProductoTipoId(producto.getProductoTipoId())
+                            .setDescripcion(producto.getDescripcion())
+                            .setFabricante(producto.getFabricante())
+                            .setLote(producto.getLote())
+                            .setCantidadStock(producto.getCantidadStock())
+                            .setStockMinimo(producto.getStockMinimo())
+                            .setFechaVencimiento(producto.getFechaVencimiento())
+                            .setPrecioVenta(producto.getPrecioVenta())
+                            .build();
                 }
             }
-        } catch (SQLException e) {
-            throw new RuntimeException("Error al agregar producto: " + e.getMessage(), e);
         }
+        return producto; // Si no se generó ID, devolver el original
+    } catch (SQLException e) {
+        throw new RuntimeException("Error al agregar producto: " + e.getMessage(), e);
     }
-    
+}  
 
     @Override
     public List<Inventario> listarTodos() {

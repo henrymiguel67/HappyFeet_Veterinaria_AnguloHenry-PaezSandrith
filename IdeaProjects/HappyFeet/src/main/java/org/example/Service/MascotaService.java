@@ -58,7 +58,8 @@ public class MascotaService {
     public void actualizarMascota(Mascota mascota) {
         validarMascota(mascota);
         
-        if (mascota.getId() == null || mascota.getId() <= 0) {
+        Integer id = mascota.getId();
+        if (id == null || id <= 0) {
             throw new IllegalArgumentException("ID de mascota inválido para actualizar");
         }
         
@@ -96,11 +97,13 @@ public class MascotaService {
             throw new IllegalArgumentException("El nombre de la mascota es requerido");
         }
         
-        if (mascota.getDuenoId() == null || mascota.getDuenoId() <= 0) {
+        Integer duenoId = mascota.getDuenoId();
+        if (duenoId == null || duenoId <= 0) {
             throw new IllegalArgumentException("ID de dueño inválido");
         }
         
-        if (mascota.getRazaId() == null || mascota.getRazaId() <= 0) {
+        Integer razaId = mascota.getRazaId();
+        if (razaId == null || razaId <= 0) {
             throw new IllegalArgumentException("ID de raza inválido");
         }
         

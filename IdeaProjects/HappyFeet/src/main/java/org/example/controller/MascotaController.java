@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.model.entities.Mascota;
-import org.example.service.MascotaService;
+import org.example.Service.MascotaService;
 import java.util.List;
 import java.util.Optional;
 import java.util.logging.Logger;

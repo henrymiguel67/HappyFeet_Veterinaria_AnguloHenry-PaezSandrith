@@ -1,15 +1,16 @@
 package org.example.Service;
 
 import org.example.model.entities.Factura;
-import org.example.repository.FacturaDAO;
+import org.example.Repository.FacturaDAO;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
 public class FacturaService {
     private final FacturaDAO facturaDAO;
 
-    public FacturaService() {
-        this.facturaDAO = new FacturaDAO();
+    public FacturaService(FacturaDAO facturaDAO) {
+        this.facturaDAO = facturaDAO;
     }
 
     // CREATE - Generar nueva factura
@@ -40,13 +41,8 @@ public class FacturaService {
     }
 
     // READ - Buscar facturas por rango de fechas
-    public List<Factura> buscarFacturasPorRangoFechas(java.util.Date fechaInicio, java.util.Date fechaFin) {
-        if (fechaInicio == null || fechaFin == null) {
-            throw new IllegalArgumentException("Las fechas no pueden ser nulas");
-        }
-        if (fechaInicio.after(fechaFin)) {
-            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha fin");
-        }
+    public List<Factura> buscarFacturasPorRangoFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        validarRangoFechas(fechaInicio, fechaFin);
         return facturaDAO.buscarPorRangoFechas(fechaInicio, fechaFin);
     }
 
@@ -63,9 +59,7 @@ public class FacturaService {
             throw new IllegalArgumentException("ID de factura inválido para actualizar");
         }
         
-        // Verificar que la factura existe
-        Optional<Factura> facturaExistente = facturaDAO.buscarPorId(factura.getId());
-        if (facturaExistente.isEmpty()) {
+        if (!facturaDAO.existeFactura(factura.getId())) {
             throw new IllegalArgumentException("No se encontró la factura con ID: " + factura.getId());
         }
         
@@ -78,9 +72,7 @@ public class FacturaService {
             throw new IllegalArgumentException("ID de factura inválido");
         }
         
-        // Verificar que la factura existe antes de eliminar
-        Optional<Factura> factura = facturaDAO.buscarPorId(id);
-        if (factura.isEmpty()) {
+        if (!facturaDAO.existeFactura(id)) {
             throw new IllegalArgumentException("No se encontró la factura con ID: " + id);
         }
         
@@ -88,46 +80,32 @@ public class FacturaService {
     }
 
     // REPORTES - Total facturado por período
-    public Double obtenerTotalFacturadoPorPeriodo(java.util.Date fechaInicio, java.util.Date fechaFin) {
-        if (fechaInicio == null || fechaFin == null) {
-            throw new IllegalArgumentException("Las fechas no pueden ser nulas");
-        }
-        if (fechaInicio.after(fechaFin)) {
-            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha fin");
-        }
-        
-        Double total = facturaDAO.obtenerTotalFacturadoPorPeriodo(fechaInicio, fechaFin);
-        return total != null ? total : 0.0;
+    public Double obtenerTotalFacturadoPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        validarRangoFechas(fechaInicio, fechaFin);
+        return facturaDAO.obtenerTotalFacturadoPorPeriodo(fechaInicio, fechaFin);
     }
 
     // REPORTES - Cantidad de facturas por período
-    public Integer contarFacturasPorPeriodo(java.util.Date fechaInicio, java.util.Date fechaFin) {
-        if (fechaInicio == null || fechaFin == null) {
-            throw new IllegalArgumentException("Las fechas no pueden ser nulas");
-        }
-        if (fechaInicio.after(fechaFin)) {
-            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha fin");
-        }
-        
+    public Integer contarFacturasPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        validarRangoFechas(fechaInicio, fechaFin);
         return facturaDAO.contarFacturasPorPeriodo(fechaInicio, fechaFin);
     }
 
     // REPORTES - Promedio de facturación por período
-    public Double obtenerPromedioFacturacionPorPeriodo(java.util.Date fechaInicio, java.util.Date fechaFin) {
+    public Double obtenerPromedioFacturacionPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         Integer cantidad = contarFacturasPorPeriodo(fechaInicio, fechaFin);
-        Double total = obtenerTotalFacturadoPorPeriodo(fechaInicio, fechaFin);
-        
         if (cantidad == 0) {
             return 0.0;
         }
-        
-        return total / cantidad;
+        return obtenerTotalFacturadoPorPeriodo(fechaInicio, fechaFin) / cantidad;
     }
 
     // REPORTES - Factura con mayor monto por período
-    public Optional<Factura> obtenerFacturaMayorMontoPorPeriodo(java.util.Date fechaInicio, java.util.Date fechaFin) {
-        List<Factura> facturas = buscarFacturasPorRangoFechas(fechaInicio, fechaFin);
+    public Optional<Factura> obtenerFacturaMayorMontoPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        validarRangoFechas(fechaInicio, fechaFin);
         
+        // Implementación alternativa ya que el DAO no tiene este método directamente
+        List<Factura> facturas = buscarFacturasPorRangoFechas(fechaInicio, fechaFin);
         return facturas.stream()
                 .max((f1, f2) -> Double.compare(f1.getTotal(), f2.getTotal()));
     }
@@ -146,28 +124,21 @@ public class FacturaService {
             throw new IllegalArgumentException("Fecha de emisión es requerida");
         }
         
-        if (factura.getTotal() == null || factura.getTotal() < 0) {
+        if (factura.getTotal() < 0) {
             throw new IllegalArgumentException("Total de factura inválido");
         }
         
-        // Validar que la fecha no sea futura
-        if (factura.getFechaEmision().after(new java.util.Date())) {
+        if (factura.getFechaEmision().isAfter(LocalDateTime.now())) {
             throw new IllegalArgumentException("La fecha de emisión no puede ser futura");
         }
     }
 
-    // Método para calcular total automáticamente basado en items (se implementará después)
-    public Double calcularTotalFactura(List<Object> items) {
-        // Esto se integrará con ItemsFacturaService después
-        double total = 0.0;
-        // Lógica de cálculo basada en items
-        return total;
-    }
-
-    // Método para generar número de factura consecutivo
-    public String generarNumeroFactura() {
-        Optional<Factura> ultimaFactura = facturaDAO.obtenerUltimaFactura();
-        int siguienteNumero = ultimaFactura.map(f -> f.getId() + 1).orElse(1);
-        return String.format("F-%06d", siguienteNumero);
+    private void validarRangoFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
+        if (fechaInicio == null || fechaFin == null) {
+            throw new IllegalArgumentException("Las fechas no pueden ser nulas");
+        }
+        if (fechaInicio.isAfter(fechaFin)) {
+            throw new IllegalArgumentException("La fecha de inicio no puede ser posterior a la fecha fin");
+        }
     }
 }

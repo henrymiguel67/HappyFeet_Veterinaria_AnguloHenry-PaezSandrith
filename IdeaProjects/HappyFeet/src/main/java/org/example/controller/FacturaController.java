@@ -12,7 +12,7 @@ public class FacturaController {
     private final FacturaService facturaService;
 
     public FacturaController() {
-        this.facturaService = new FacturaService();
+        this.facturaService = FacturaService.getInstance();
     }
 
     // CREATE - Generar nueva factura
@@ -20,7 +20,7 @@ public class FacturaController {
         try {
             Factura factura = new Factura();
             factura.setDuenoId(duenoId);
-            factura.setFechaEmision(new java.util.Date());
+            factura.setFechaEmision(java.time.LocalDateTime.ofInstant(new java.util.Date().toInstant(), java.time.ZoneId.systemDefault()));
             factura.setTotal(total);
 
             facturaService.generarFactura(factura);

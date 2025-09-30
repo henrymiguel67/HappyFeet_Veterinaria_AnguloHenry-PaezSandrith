@@ -1,7 +1,7 @@
 package org.example.Service;
 
 import org.example.model.entities.Inventario;
-import org.example.repository.InventarioDAO;
+import org.example.Repository.InventarioDAO;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,7 +75,8 @@ public class InventarioService {
     public void actualizarProducto(Inventario producto) {
         validarProducto(producto);
         
-        if (producto.getId() == null || producto.getId() <= 0) {
+        Integer id = producto.getId();
+        if (id == null || id <= 0) {
             throw new IllegalArgumentException("ID de producto inválido para actualizar");
         }
         
@@ -220,19 +221,22 @@ public class InventarioService {
             throw new IllegalArgumentException("El nombre del producto es requerido");
         }
         
-        if (producto.getProductoTipoId() == null || producto.getProductoTipoId() <= 0) {
+        Integer productoTipoId = producto.getProductoTipoId();
+        if (productoTipoId == null || productoTipoId <= 0) {
             throw new IllegalArgumentException("ID de tipo de producto inválido");
         }
         
-        if (producto.getCantidadStock() == null || producto.getCantidadStock() < 0) {
+        Integer cantidadStock = producto.getCantidadStock();
+        if (cantidadStock == null || cantidadStock < 0) {
             throw new IllegalArgumentException("La cantidad de stock no puede ser negativa");
         }
         
-        if (producto.getStockMinimo() == null || producto.getStockMinimo() < 0) {
+        Integer stockMinimo = producto.getStockMinimo();
+        if (stockMinimo == null || stockMinimo < 0) {
             throw new IllegalArgumentException("El stock mínimo no puede ser negativo");
         }
         
-        if (producto.getPrecioVenta() == null || producto.getPrecioVenta() < 0) {
+        if (producto.getPrecioVenta() < 0) {
             throw new IllegalArgumentException("El precio de venta no puede ser negativo");
         }
         
