@@ -19,4 +19,29 @@ public record ItemsFacturaController(ItemsFacturaDAO dao) {
                 item.getCantidad() > 0 &&
                 item.getPrecioUnitario() >= 0;
     }
+
+    public void crear() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'crear'");
+    }
+
+    public void listar() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listar'");
+    }
+
+    public void actualizar() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'actualizar'");
+    }
+
+    public void eliminar() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    }
+
+    public void buscarPorCriterio() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'buscarPorCriterio'");
+    }
 }

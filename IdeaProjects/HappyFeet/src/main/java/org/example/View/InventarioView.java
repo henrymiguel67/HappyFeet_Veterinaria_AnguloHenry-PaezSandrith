@@ -66,7 +66,7 @@ public class InventarioView {
         } while (opcion != 0);
     }
 
-    private void agregarProducto() {
+    public void agregarProducto() {
         System.out.println("\n--- ➕ AGREGAR NUEVO PRODUCTO ---");
         
         try {
@@ -403,5 +403,10 @@ public class InventarioView {
         } catch (Exception e) {
             System.out.println("❌ Error al generar resumen rápido: " + e.getMessage());
         }
+    }
+
+    public void listarProductos() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarProductos'");
     }
 }

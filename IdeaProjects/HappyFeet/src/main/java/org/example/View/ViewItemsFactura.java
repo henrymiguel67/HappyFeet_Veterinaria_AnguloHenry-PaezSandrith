@@ -38,4 +38,14 @@ public class ViewItemsFactura {
             logger.info("------------------------");
         }
     }
+
+    public void agregarItem() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'agregarItem'");
+    }
+
+    public void listarItems() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarItems'");
+    }
 }

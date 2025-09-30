@@ -1,3 +1,4 @@
+
 package org.example.Repository;
 
 import org.example.model.entities.Inventario;
@@ -10,50 +11,59 @@ import java.util.List;
 import java.util.Optional;
 
 public class InventarioDAO implements IInventarioDAO {
-    
-@Override
-public Inventario agregarProducto(Inventario producto) {
-    String sql = "INSERT INTO inventario (nombre_producto, producto_tipo_id, descripcion, " +
-                 "fabricante, lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta) " +
-                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    try (Connection conn = DatabaseConnection.getInstance().getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    @Override
+    public Inventario agregarProducto(Inventario producto) {
+        String sql = "INSERT INTO inventario (nombre_producto, producto_tipo_id, descripcion, " +
+                "fabricante, lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-        // ... (configurar parámetros igual que antes)
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
-        int affectedRows = stmt.executeUpdate();
-        if (affectedRows > 0) {
-            try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    // Crear y devolver una nueva instancia con el ID actualizado
-                    return new Inventario.Builder()
-                            .setId(generatedKeys.getInt(1))
-                            .setNombreProducto(producto.getNombreProducto())
-                            .setProductoTipoId(producto.getProductoTipoId())
-                            .setDescripcion(producto.getDescripcion())
-                            .setFabricante(producto.getFabricante())
-                            .setLote(producto.getLote())
-                            .setCantidadStock(producto.getCantidadStock())
-                            .setStockMinimo(producto.getStockMinimo())
-                            .setFechaVencimiento(producto.getFechaVencimiento())
-                            .setPrecioVenta(producto.getPrecioVenta())
-                            .build();
+            stmt.setString(1, producto.getNombreProducto());
+            stmt.setInt(2, producto.getProductoTipoId());
+            stmt.setString(3, producto.getDescripcion());
+            stmt.setString(4, producto.getFabricante());
+            stmt.setString(5, producto.getLote());
+            stmt.setInt(6, producto.getCantidadStock());
+            stmt.setInt(7, producto.getStockMinimo());
+            if (producto.getFechaVencimiento() != null) {
+                stmt.setDate(8, new java.sql.Date(producto.getFechaVencimiento().getTime()));
+            } else {
+                stmt.setNull(8, Types.DATE);
+            }
+            stmt.setDouble(9, producto.getPrecioVenta());
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                try (ResultSet generatedKeys = stmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        return new Inventario.Builder()
+                                .setId(generatedKeys.getInt(1))
+                                .setNombreProducto(producto.getNombreProducto())
+                                .setProductoTipoId(producto.getProductoTipoId())
+                                .setDescripcion(producto.getDescripcion())
+                                .setFabricante(producto.getFabricante())
+                                .setLote(producto.getLote())
+                                .setCantidadStock(producto.getCantidadStock())
+                                .setStockMinimo(producto.getStockMinimo())
+                                .setFechaVencimiento(producto.getFechaVencimiento())
+                                .setPrecioVenta(producto.getPrecioVenta())
+                                .build();
+                    }
                 }
             }
+            return producto;
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al agregar producto: " + e.getMessage(), e);
         }
-        return producto; // Si no se generó ID, devolver el original
-    } catch (SQLException e) {
-        throw new RuntimeException("Error al agregar producto: " + e.getMessage(), e);
     }
-}  
 
     @Override
     public List<Inventario> listarTodos() {
         List<Inventario> productos = new ArrayList<>();
-        String sql = "SELECT id, nombre_producto, producto_tipo_id, descripcion, fabricante, " +
-                     "lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta " +
-                     "FROM inventario ORDER BY nombre_producto";
+        String sql = "SELECT * FROM inventario ORDER BY nombre_producto";
 
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql);
@@ -70,13 +80,9 @@ public Inventario agregarProducto(Inventario producto) {
 
     @Override
     public Optional<Inventario> buscarPorId(Integer id) {
-        String sql = "SELECT id, nombre_producto, producto_tipo_id, descripcion, fabricante, " +
-                     "lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta " +
-                     "FROM inventario WHERE id = ?";
-
+        String sql = "SELECT * FROM inventario WHERE id = ?";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
@@ -92,13 +98,9 @@ public Inventario agregarProducto(Inventario producto) {
     @Override
     public List<Inventario> buscarPorNombre(String nombre) {
         List<Inventario> productos = new ArrayList<>();
-        String sql = "SELECT id, nombre_producto, producto_tipo_id, descripcion, fabricante, " +
-                     "lote, cantidad_stock, stock_minimo, fecha_vencimiento, precio_venta " +
-                     "FROM inventario WHERE nombre_producto LIKE ? ORDER BY nombre_producto";
-
+        String sql = "SELECT * FROM inventario WHERE nombre_producto LIKE ? ORDER BY nombre_producto";
         try (Connection conn = DatabaseConnection.getInstance().getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
-
             stmt.setString(1, "%" + nombre + "%");
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
@@ -110,8 +112,6 @@ public Inventario agregarProducto(Inventario producto) {
         }
         return productos;
     }
-
-    // Otros métodos de la interfaz IInventarioDAO se implementan de manera similar...
 
     private Inventario mapResultSetToInventario(ResultSet rs) throws SQLException {
         java.sql.Date fechaVencimientoSqlDate = rs.getDate("fecha_vencimiento");
@@ -136,67 +136,191 @@ public Inventario agregarProducto(Inventario producto) {
 
     @Override
     public List<Inventario> buscarPorTipo(Integer productoTipoId) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorTipo'");
+        List<Inventario> productos = new ArrayList<>();
+        String sql = "SELECT * FROM inventario WHERE producto_tipo_id = ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, productoTipoId);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    productos.add(mapResultSetToInventario(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar productos por tipo: " + e.getMessage(), e);
+        }
+        return productos;
     }
 
     @Override
     public List<Inventario> buscarStockBajo() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarStockBajo'");
+        List<Inventario> productos = new ArrayList<>();
+        String sql = "SELECT * FROM inventario WHERE cantidad_stock <= stock_minimo";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                productos.add(mapResultSetToInventario(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar productos con stock bajo: " + e.getMessage(), e);
+        }
+        return productos;
     }
 
     @Override
     public List<Inventario> buscarProximosAVencer(int dias) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarProximosAVencer'");
+        List<Inventario> productos = new ArrayList<>();
+        String sql = "SELECT * FROM inventario WHERE fecha_vencimiento <= DATE_ADD(CURDATE(), INTERVAL ? DAY)";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, dias);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    productos.add(mapResultSetToInventario(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar productos próximos a vencer: " + e.getMessage(), e);
+        }
+        return productos;
     }
 
     @Override
     public List<Inventario> buscarVencidos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarVencidos'");
+        List<Inventario> productos = new ArrayList<>();
+        String sql = "SELECT * FROM inventario WHERE fecha_vencimiento < CURDATE()";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                productos.add(mapResultSetToInventario(rs));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al buscar productos vencidos: " + e.getMessage(), e);
+        }
+        return productos;
     }
 
     @Override
     public void actualizarProducto(Inventario producto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarProducto'");
+        String sql = "UPDATE inventario SET nombre_producto=?, producto_tipo_id=?, descripcion=?, fabricante=?, " +
+                "lote=?, cantidad_stock=?, stock_minimo=?, fecha_vencimiento=?, precio_venta=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, producto.getNombreProducto());
+            stmt.setInt(2, producto.getProductoTipoId());
+            stmt.setString(3, producto.getDescripcion());
+            stmt.setString(4, producto.getFabricante());
+            stmt.setString(5, producto.getLote());
+            stmt.setInt(6, producto.getCantidadStock());
+            stmt.setInt(7, producto.getStockMinimo());
+            if (producto.getFechaVencimiento() != null) {
+                stmt.setDate(8, new java.sql.Date(producto.getFechaVencimiento().getTime()));
+            } else {
+                stmt.setNull(8, Types.DATE);
+            }
+            stmt.setDouble(9, producto.getPrecioVenta());
+            stmt.setInt(10, producto.getId());
+
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar producto: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void actualizarStock(Integer id, Integer nuevaCantidad) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizarStock'");
+        String sql = "UPDATE inventario SET cantidad_stock=? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, nuevaCantidad);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al actualizar stock: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void deducirStock(Integer id, Integer cantidad) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deducirStock'");
+        String sql = "UPDATE inventario SET cantidad_stock = cantidad_stock - ? WHERE id=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, cantidad);
+            stmt.setInt(2, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al deducir stock: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public void eliminarProducto(Integer id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminarProducto'");
+        String sql = "DELETE FROM inventario WHERE id=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al eliminar producto: " + e.getMessage(), e);
+        }
     }
 
     @Override
     public boolean existeProducto(String nombreProducto) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'existeProducto'");
+        String sql = "SELECT COUNT(*) FROM inventario WHERE nombre_producto=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, nombreProducto);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar existencia de producto: " + e.getMessage(), e);
+        }
+        return false;
     }
 
     @Override
     public boolean hayStockSuficiente(Integer id, Integer cantidadRequerida) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'hayStockSuficiente'");
+        String sql = "SELECT cantidad_stock FROM inventario WHERE id=?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("cantidad_stock") >= cantidadRequerida;
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al verificar stock suficiente: " + e.getMessage(), e);
+        }
+        return false;
     }
 
     @Override
     public List<Inventario> obtenerProductosMasVendidos(int limite) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'obtenerProductosMasVendidos'");
+        List<Inventario> productos = new ArrayList<>();
+        String sql = "SELECT i.* FROM inventario i " +
+                "JOIN items_factura itf ON i.id = itf.inventario_id " +
+                "GROUP BY i.id " +
+                "ORDER BY SUM(itf.cantidad) DESC LIMIT ?";
+        try (Connection conn = DatabaseConnection.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, limite);
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    productos.add(mapResultSetToInventario(rs));
+                }
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error al obtener productos más vendidos: " + e.getMessage(), e);
+        }
+        return productos;
     }
 }
+

@@ -189,6 +189,11 @@ public class Factura {
                 ", moneda=" + moneda +
                 '}';
     }
+
+    public void agregarProducto(String producto, int cantidad, double precio) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'agregarProducto'");
+    }
 }
 
 // Supporting class for invoice items

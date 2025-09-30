@@ -305,4 +305,14 @@ public class MascotaView {
             System.out.println("❌ Error: " + e.getMessage());
         }
     }
+
+    public void registrarMascota() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'registrarMascota'");
+    }
+
+    public void listarMascotas() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'listarMascotas'");
+    }
 }
