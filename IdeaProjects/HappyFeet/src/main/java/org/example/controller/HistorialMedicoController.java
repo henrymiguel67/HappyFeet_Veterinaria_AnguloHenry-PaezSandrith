@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.model.entities.HistorialMedico;
-import org.example.service.HistorialMedicoService;
+import org.example.Service.HistorialMedicoService;
 import java.util.List;
 
 public class HistorialMedicoController {

@@ -103,4 +103,9 @@ public class ItemsFacturaDAO {
         
         return items;
     }
+
+    public void eliminarItemFactura(int id) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'eliminarItemFactura'");
+    }
 }

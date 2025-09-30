@@ -1,7 +1,7 @@
 package org.example.controller;
 
 import org.example.model.entities.Citas;
-import org.example.service.CitasService;
+import org.example.Service.CitasService;
 import java.util.List;
 
 public class CitasController {

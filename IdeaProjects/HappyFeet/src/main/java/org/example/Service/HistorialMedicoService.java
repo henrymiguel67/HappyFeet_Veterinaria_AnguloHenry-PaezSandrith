@@ -1,7 +1,7 @@
 package org.example.Service;
 
 import org.example.model.entities.HistorialMedico;
-import org.example.repository.HistorialMedicoDAO;
+import org.example.Repository.HistorialMedicoDAO;
 import java.util.List;
 
 public class HistorialMedicoService {

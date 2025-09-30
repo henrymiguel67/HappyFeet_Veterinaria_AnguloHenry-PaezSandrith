@@ -1,7 +1,7 @@
 package org.example.Service;
 
 import org.example.model.entities.Citas;
-import org.example.repository.CitasDAO;
+import org.example.Repository.CitasDAO;
 import java.util.List;
 
 public class CitasService {
