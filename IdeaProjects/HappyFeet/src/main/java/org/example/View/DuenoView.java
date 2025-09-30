@@ -1,4 +1,4 @@
-package org.example.view;
+package org.example.View;
 
 import org.example.controller.DuenoController;
 import org.example.model.entities.Dueno;
