@@ -23,10 +23,16 @@ public class FacturaController {
     }
 
     // CREATE - Generar nueva factura
+
+    /**
+     *
+     * @param factura
+     * @return
+     */
     public boolean generarFactura(Factura factura) {
         try {
             facturaService.generarFactura(factura);
-            logger.info("✅ Factura generada exitosamente - ID: " + factura.getId() + " - Total: $" + factura.getTotal());
+            logger.log(Level.INFO, "\u2705 Factura generada exitosamente - ID: {0} - Total: ${1}", new Object[]{factura.getId(), factura.getTotal()});
             return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al generar factura: " + e.getMessage(), e);
@@ -38,7 +44,7 @@ public class FacturaController {
     public List<Factura> listarTodasLasFacturas() {
         try {
             List<Factura> facturas = facturaService.listarTodasLasFacturas();
-            logger.info("📋 Se listaron " + facturas.size() + " facturas");
+            logger.log(Level.INFO, "\ud83d\udccb Se listaron {0} facturas", facturas.size());
             return facturas;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al listar facturas: " + e.getMessage(), e);
@@ -51,9 +57,9 @@ public class FacturaController {
         try {
             Optional<Factura> factura = facturaService.buscarFacturaPorId(id);
             if (factura.isPresent()) {
-                logger.info("🔍 Factura encontrada - ID: " + factura.get().getId());
+                logger.log(Level.INFO, "\ud83d\udd0d Factura encontrada - ID: {0}", factura.get().getId());
             } else {
-                logger.info("🔍 No se encontró factura con ID: " + id);
+                logger.log(Level.INFO, "\ud83d\udd0d No se encontr\u00f3 factura con ID: {0}", id);
             }
             return factura;
         } catch (Exception e) {
@@ -66,7 +72,7 @@ public class FacturaController {
     public List<Factura> buscarFacturasPorDueno(Integer duenoId) {
         try {
             List<Factura> facturas = facturaService.buscarFacturasPorDueno(duenoId);
-            logger.info("🏠 Se encontraron " + facturas.size() + " facturas para el dueño ID: " + duenoId);
+            logger.log(Level.INFO, "\ud83c\udfe0 Se encontraron {0} facturas para el due\u00f1o ID: {1}", new Object[]{facturas.size(), duenoId});
             return facturas;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al buscar facturas por dueño: " + e.getMessage(), e);
@@ -78,7 +84,7 @@ public class FacturaController {
     public List<Factura> buscarFacturasPorRangoFechas(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         try {
             List<Factura> facturas = facturaService.buscarFacturasPorRangoFechas(fechaInicio, fechaFin);
-            logger.info("📅 Se encontraron " + facturas.size() + " facturas en el rango de fechas");
+            logger.log(Level.INFO, "\ud83d\udcc5 Se encontraron {0} facturas en el rango de fechas", facturas.size());
             return facturas;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al buscar facturas por rango de fechas: " + e.getMessage(), e);
@@ -91,7 +97,7 @@ public class FacturaController {
         try {
             Optional<Factura> factura = facturaService.obtenerUltimaFactura();
             if (factura.isPresent()) {
-                logger.info("⏱️ Última factura obtenida - ID: " + factura.get().getId());
+                logger.log(Level.INFO, "\u23f1\ufe0f \u00daltima factura obtenida - ID: {0}", factura.get().getId());
             } else {
                 logger.info("⏱️ No hay facturas registradas");
             }
@@ -106,7 +112,7 @@ public class FacturaController {
     public boolean actualizarFactura(Factura factura) {
         try {
             facturaService.actualizarFactura(factura);
-            logger.info("🔄 Factura actualizada exitosamente - ID: " + factura.getId());
+            logger.log(Level.INFO, "\ud83d\udd04 Factura actualizada exitosamente - ID: {0}", factura.getId());
             return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al actualizar factura: " + e.getMessage(), e);
@@ -118,7 +124,7 @@ public class FacturaController {
     public boolean eliminarFactura(Integer id) {
         try {
             facturaService.eliminarFactura(id);
-            logger.info("🗑️ Factura eliminada exitosamente - ID: " + id);
+            logger.log(Level.INFO, "\ud83d\uddd1\ufe0f Factura eliminada exitosamente - ID: {0}", id);
             return true;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al eliminar factura: " + e.getMessage(), e);
@@ -130,7 +136,7 @@ public class FacturaController {
     public Double obtenerTotalFacturadoPorPeriodo(LocalDateTime fechaInicio, LocalDateTime fechaFin) {
         try {
             Double total = facturaService.obtenerTotalFacturadoPorPeriodo(fechaInicio, fechaFin);
-            logger.info("💰 Total facturado en el período: $" + total);
+            logger.log(Level.INFO, "\ud83d\udcb0 Total facturado en el per\u00edodo: ${0}", total);
             return total;
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al obtener total facturado: " + e.getMessage(), e);
@@ -147,13 +153,13 @@ public class FacturaController {
             Optional<Factura> facturaMayor = facturaService.obtenerFacturaMayorMontoPorPeriodo(fechaInicio, fechaFin);
 
             logger.info("📊 === REPORTE ESTADÍSTICAS === ");
-            logger.info("📊 Período: " + fechaInicio + " a " + fechaFin);
-            logger.info("📊 Total Facturado: $" + totalFacturado);
-            logger.info("📊 Cantidad de Facturas: " + cantidadFacturas);
-            logger.info("📊 Promedio por Factura: $" + promedioFacturacion);
+            logger.log(Level.INFO, "\ud83d\udcca Per\u00edodo: {0} a {1}", new Object[]{fechaInicio, fechaFin});
+            logger.log(Level.INFO, "\ud83d\udcca Total Facturado: ${0}", totalFacturado);
+            logger.log(Level.INFO, "\ud83d\udcca Cantidad de Facturas: {0}", cantidadFacturas);
+            logger.log(Level.INFO, "\ud83d\udcca Promedio por Factura: ${0}", promedioFacturacion);
 
             facturaMayor.ifPresent(f -> 
-                logger.info("📊 Factura Mayor - ID: " + f.getId() + " - Monto: $" + f.getTotal())
+                logger.log(Level.INFO, "\ud83d\udcca Factura Mayor - ID: {0} - Monto: ${1}", new Object[]{f.getId(), f.getTotal()})
             );
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error al generar reporte estadístico: " + e.getMessage(), e);
@@ -173,6 +179,7 @@ public class FacturaController {
             logger.log(Level.SEVERE, "❌ Error al contar facturas por periodo: " + e.getMessage(), e);
             return 0;
         }
-    }
-}
+    }    }
+
+
 

@@ -1,5 +1,7 @@
 package org.example.View;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.example.controller.MascotaController;
 import org.example.model.entities.Mascota;
 import java.util.List;
@@ -306,13 +308,59 @@ public class MascotaView {
         }
     }
 
-    public void registrarMascota() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registrarMascota'");
+public void registrarMascota() throws java.text.ParseException {
+        try {
+            System.out.println("=== Registrar nueva mascota ===");
+            
+            System.out.print("ID del dueño: ");
+            Integer duenoId = Integer.valueOf(scanner.nextLine());
+            
+            System.out.print("Nombre de la mascota: ");
+            String nombre = scanner.nextLine();
+            
+            System.out.print("ID de raza: ");
+            Integer razaId = Integer.valueOf(scanner.nextLine());
+            
+            System.out.print("Fecha de nacimiento (dd/MM/yyyy): ");
+            String fechaStr = scanner.nextLine();
+            Date fechaNacimiento;
+            fechaNacimiento = null;
+            fechaNacimiento = new SimpleDateFormat("dd/MM/yyyy").parse(fechaStr);
+            
+            System.out.print("Sexo (Macho/Hembra): ");
+            String sexo = scanner.nextLine();
+            
+            System.out.print("URL de la foto (opcional): ");
+            String urlFoto = scanner.nextLine();
+
+            // Validar datos antes de llamar al controller
+            if (!mascotaController.validarDatosMascota(nombre, duenoId, razaId, sexo)) {
+                System.out.println("Datos inválidos. Verifica los datos ingresados.");
+                return;
+            }
+            
+            boolean exito = mascotaController.agregarMascota(duenoId, nombre, razaId, fechaNacimiento, sexo, urlFoto);
+            if (exito) {
+                System.out.println("Mascota registrada con éxito!");
+            } else {
+                System.out.println("Error al registrar la mascota.");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("ID de dueño o raza debe ser un número válido.");
+        }
     }
 
     public void listarMascotas() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarMascotas'");
+        System.out.println("=== Listado de mascotas ===");
+        List<Mascota> mascotas = mascotaController.listarTodasLasMascotas();
+        if (mascotas.isEmpty()) {
+            System.out.println("No hay mascotas registradas.");
+        } else {
+            for (Mascota m : mascotas) {
+                System.out.printf("ID: %d, Nombre: %s, Dueño ID: %d, Raza ID: %d, Sexo: %s, Fecha Nac: %s, Foto URL: %s\n",
+                        m.getId(), m.getNombre(), m.getDuenoId(), m.getRazaId(), m.getSexo(),
+                        new SimpleDateFormat("dd/MM/yyyy").format(m.getFechaNacimiento()), m.getUrlFoto());
+            }
+        }
     }
 }

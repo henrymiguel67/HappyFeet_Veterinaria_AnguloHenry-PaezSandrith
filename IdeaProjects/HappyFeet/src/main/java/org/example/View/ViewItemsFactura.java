@@ -2,14 +2,15 @@ package org.example.View;
 
 import org.example.model.entities.ItemsFactura;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ViewItemsFactura {
-    private final Logger logger;
+    private static final Logger logger = Logger.getLogger(ViewItemsFactura.class.getName());
 
     // Constructor con Logger
     public ViewItemsFactura() {
-        this.logger = Logger.getLogger(ViewItemsFactura.class.getName());
+       
     }
 
     public void mostrarMenu() {
@@ -28,13 +29,13 @@ public class ViewItemsFactura {
 
         logger.info("\n--- Lista de Items de Factura ---");
         for (ItemsFactura item : items) {
-            logger.info("ID: " + item.getId());
-            logger.info("Factura ID: " + item.getIdFactura());
-            logger.info("Producto ID: " + item.getProductoId());
-            logger.info("Descripción: " + item.getServicioDescripcion());
-            logger.info("Cantidad: " + item.getCantidad());
-            logger.info("Precio: " + item.getPrecioUnitario());
-            logger.info("Subtotal: " + item.getSubtotal());
+            logger.log(Level.INFO, "ID: {0}", item.getId());
+            logger.log(Level.INFO, "Factura ID: {0}", item.getIdFactura());
+            logger.log(Level.INFO, "Producto ID: {0}", item.getProductoId());
+            logger.log(Level.INFO, "Descripci\u00f3n: {0}", item.getServicioDescripcion());
+            logger.log(Level.INFO, "Cantidad: {0}", item.getCantidad());
+            logger.log(Level.INFO, "Precio: {0}", item.getPrecioUnitario());
+            logger.log(Level.INFO, "Subtotal: {0}", item.getSubtotal());
             logger.info("------------------------");
         }
     }

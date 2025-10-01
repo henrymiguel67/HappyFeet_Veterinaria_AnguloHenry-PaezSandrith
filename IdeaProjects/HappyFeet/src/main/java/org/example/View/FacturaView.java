@@ -37,8 +37,8 @@ public class FacturaView {
             scanner.nextLine();
 
             switch (opcion) {
-                case 1 -> crearFactura();
-                case 2 -> listarFacturas();
+                case 1 -> generarFactura();
+                case 2 -> listarTodasLasFacturas();
                 case 3 -> buscarFacturaPorId();
                 case 4 -> buscarFacturasPorDueno();
                 case 5 -> buscarFacturasPorRangoFechas();
@@ -50,7 +50,7 @@ public class FacturaView {
         } while (opcion != 0);
     }
 
-    private void crearFactura() {
+    public void generarFactura() {
         System.out.print("Ingrese ID del dueño: ");
         int duenoId = scanner.nextInt();
         scanner.nextLine();
@@ -70,7 +70,7 @@ public class FacturaView {
         }
     }
 
-    public void listarFacturas() {
+    public void listarTodasLasFacturas() {
         List<Factura> facturas = facturaController.listarTodasLasFacturas();
         if (facturas.isEmpty()) {
             System.out.println("No hay facturas registradas.");
@@ -145,5 +145,5 @@ public class FacturaView {
 
         facturaController.generarReporteEstadisticas(fechaInicio, fechaFin);
     }
-}
 
+}

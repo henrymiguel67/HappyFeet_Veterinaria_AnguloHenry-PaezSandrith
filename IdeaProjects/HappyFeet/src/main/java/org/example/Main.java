@@ -1,13 +1,16 @@
 package org.example;
 
-
+import java.text.ParseException;
 import org.example.View.*;
 
 import java.util.Scanner;
 import java.util.logging.Logger;
 import java.util.logging.Level;
+import org.example.Repository.DuenoDAO;
+import org.example.controller.DuenoController;
 
 public class Main {
+
     private static final Logger logger = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
@@ -17,8 +20,8 @@ public class Main {
         logger.info("Iniciando Sistema Happy Feet Veterinaria...");
 
         try (Scanner scanner = new Scanner(System.in)) {
-            // Inicializamos Vistas (los controllers se inicializan dentro de las vistas)
-            DuenoView duenoView = new DuenoView();
+            DuenoController duenoController = new DuenoController(new DuenoDAO());
+            DuenoView duenoView = new DuenoView(duenoController);
             MascotaView mascotaView = new MascotaView();
             FacturaView facturaView = new FacturaView(null);
             InventarioView inventarioView = new InventarioView();
@@ -30,35 +33,27 @@ public class Main {
             do {
                 mostrarMenuPrincipal();
                 System.out.print("🎯 Seleccione una opción: ");
-                
+
                 opcion = leerOpcion(scanner);
 
                 switch (opcion) {
-                    case 1:
+                    case 1 ->
                         gestionarDuenos(duenoView, scanner);
-                        break;
-                    case 2:
+                    case 2 ->
                         gestionarMascotas(mascotaView, scanner);
-                        break;
-                    case 3:
+                    case 3 ->
                         gestionarCitas(citasView, scanner);
-                        break;
-                    case 4:
+                    case 4 ->
                         gestionarHistorialMedico(historialView, scanner);
-                        break;
-                    case 5:
+                    case 5 ->
                         gestionarFacturas(facturaView, scanner);
-                        break;
-                    case 6:
+                    case 6 ->
                         gestionarItemsFactura(itemsFacturaView, scanner);
-                        break;
-                    case 7:
+                    case 7 ->
                         gestionarInventario(inventarioView, scanner);
-                        break;
-                    case 8:
+                    case 8 ->
                         mostrarDespedida();
-                        break;
-                    default:
+                    default ->
                         System.out.println("❌ Opción no válida. Intente nuevamente.");
                 }
             } while (opcion != 8);
@@ -108,7 +103,7 @@ public class Main {
         System.out.println("⭐".repeat(50));
     }
 
-    private static void gestionarDuenos(DuenoView duenoView, Scanner scanner) {
+    private static void gestionarDuenos(DuenoView duenoView, Scanner scanner) throws Exception {
         int opcion;
         do {
             mostrarEncabezado("gestión de dueños");
@@ -119,37 +114,34 @@ public class Main {
             System.out.println("🔙 5. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine(); // Limpiar buffer
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n📝 REGISTRANDO NUEVO DUEÑO...");
                     duenoView.registrarDueno();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\n📋 LISTANDO DUEÑOS...");
                     duenoView.listarDuenos();
-                    break;
-                case 3:
+                }
+                case 3 ->
                     System.out.println("\n🔍 BUSCANDO DUEÑO...");
-                    // duenoView.buscarDuenoPorId();
-                    break;
-                case 4:
+                // duenoView.buscarDuenoPorId();
+                case 4 ->
                     System.out.println("\n📊 ESTADÍSTICAS DE DUEÑOS...");
-                    // duenoView.mostrarEstadisticas();
-                    break;
-                case 5:
+                // duenoView.mostrarEstadisticas();
+                case 5 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 5);
     }
 
-    private static void gestionarMascotas(MascotaView mascotaView, Scanner scanner) {
+    private static void gestionarMascotas(MascotaView mascotaView, Scanner scanner) throws ParseException {
         int opcion;
         do {
             mostrarEncabezado("gestión de mascotas");
@@ -160,31 +152,28 @@ public class Main {
             System.out.println("🔙 5. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n🐕 REGISTRANDO NUEVA MASCOTA...");
                     mascotaView.registrarMascota();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\n📋 LISTANDO MASCOTAS...");
                     mascotaView.listarMascotas();
-                    break;
-                case 3:
+                }
+                case 3 ->
                     System.out.println("\n🔍 BUSCANDO MASCOTA...");
-                    // mascotaView.buscarMascotaPorId();
-                    break;
-                case 4:
+                // mascotaView.buscarMascotaPorId();
+                case 4 ->
                     System.out.println("\n❤️  MASCOTAS POR DUEÑO...");
-                    // mascotaView.mostrarMascotasPorDueno();
-                    break;
-                case 5:
+                // mascotaView.mostrarMascotasPorDueno();
+                case 5 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 5);
@@ -202,35 +191,32 @@ public class Main {
             System.out.println("🔙 6. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n📅 PROGRAMANDO NUEVA CITA...");
                     citasView.programarCita();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\n🔍 CONSULTANDO CITAS POR MASCOTA...");
                     citasView.consultarCitasMascota();
-                    break;
-                case 3:
+                }
+                case 3 -> {
                     System.out.println("\n📋 LISTANDO TODAS LAS CITAS...");
                     citasView.listarTodasLasCitas();
-                    break;
-                case 4:
+                }
+                case 4 ->
                     System.out.println("\n❌ CANCELANDO CITA...");
-                    // citasView.cancelarCita();
-                    break;
-                case 5:
+                // citasView.cancelarCita();
+                case 5 ->
                     System.out.println("\n✅ CONFIRMAR ASISTENCIA...");
-                    // citasView.confirmarAsistencia();
-                    break;
-                case 6:
+                // citasView.confirmarAsistencia();
+                case 6 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 6);
@@ -247,31 +233,28 @@ public class Main {
             System.out.println("🔙 5. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n📝 REGISTRANDO HISTORIAL MÉDICO...");
                     historialView.registrarHistorial();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\n🔍 CONSULTANDO HISTORIAL...");
                     historialView.consultarHistorialMascota();
-                    break;
-                case 3:
+                }
+                case 3 ->
                     System.out.println("\n💊 AGREGANDO TRATAMIENTO...");
-                    // historialView.agregarTratamiento();
-                    break;
-                case 4:
+                // historialView.agregarTratamiento();
+                case 4 ->
                     System.out.println("\n📊 ESTADÍSTICAS DE SALUD...");
-                    // historialView.mostrarEstadisticasSalud();
-                    break;
-                case 5:
+                // historialView.mostrarEstadisticasSalud();
+                case 5 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 5);
@@ -288,31 +271,28 @@ public class Main {
             System.out.println("🔙 5. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n🧾 CREANDO NUEVA FACTURA...");
-                    facturaView.eliminarFactura();
-                    break;
-                case 2:
+                    facturaView.generarFactura();
+                }
+                case 2 -> {
                     System.out.println("\n📋 LISTANDO FACTURAS...");
-                    facturaView.listarFacturas();
-                    break;
-                case 3:
+                    facturaView.listarTodasLasFacturas();
+                }
+                case 3 ->
                     System.out.println("\n🔍 BUSCANDO FACTURA...");
-                    // facturaView.buscarFacturaPorId();
-                    break;
-                case 4:
+                // facturaView.buscarPorId();
+                case 4 ->
                     System.out.println("\n💰 TOTAL DE VENTAS...");
-                    // facturaView.mostrarTotalVentas();
-                    break;
-                case 5:
+                // facturaView.mostrarTotalVentas();
+                case 5 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 5);
@@ -329,31 +309,28 @@ public class Main {
             System.out.println("🔙 5. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n🛒 AGREGANDO ITEM...");
                     itemsView.agregarItem();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\n📋 LISTANDO ITEMS...");
                     itemsView.listarItems();
-                    break;
-                case 3:
+                }
+                case 3 ->
                     System.out.println("\n✏️  MODIFICANDO ITEM...");
-                    // itemsView.modificarItem();
-                    break;
-                case 4:
+                // itemsView.modificarItem();
+                case 4 ->
                     System.out.println("\n❌ ELIMINANDO ITEM...");
-                    // itemsView.eliminarItem();
-                    break;
-                case 5:
+                // itemsView.eliminarItem();
+                case 5 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 5);
@@ -371,35 +348,31 @@ public class Main {
             System.out.println("🔙 6. Volver al Menú Principal");
             System.out.println("─".repeat(40));
             System.out.print("🎯 Seleccione opción: ");
-            
+
             opcion = leerOpcion(scanner);
             scanner.nextLine();
 
             switch (opcion) {
-                case 1:
+                case 1 -> {
                     System.out.println("\n📦 AGREGANDO NUEVO PRODUCTO...");
                     inventarioView.agregarProducto();
-                    break;
-                case 2:
+                }
+                case 2 -> {
                     System.out.println("\n📋 LISTANDO PRODUCTOS...");
                     inventarioView.listarProductos();
-                    break;
-                case 3:
+                }
+                case 3 ->
                     System.out.println("\n🔍 BUSCANDO PRODUCTO...");
-                    // inventarioView.buscarProductoPorId();
-                    break;
-                case 4:
+                //inventarioView.buscarProductoPorId();
+                case 4 ->
                     System.out.println("\n🔄 ACTUALIZANDO STOCK...");
-                    // inventarioView.actualizarStock();
-                    break;
-                case 5:
+                // inventarioView.actualizarStock();
+                case 5 ->
                     System.out.println("\n📊 PRODUCTOS BAJOS EN STOCK...");
-                    // inventarioView.mostrarProductosBajosStock();
-                    break;
-                case 6:
+                // inventarioView.mostrarProductosBajosStock();
+                case 6 ->
                     System.out.println("↩️  Volviendo al menú principal...");
-                    break;
-                default:
+                default ->
                     System.out.println("❌ Opción no válida.");
             }
         } while (opcion != 6);

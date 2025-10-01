@@ -21,7 +21,7 @@ public class FacturaService {
 
     // READ - Listar todas las facturas
     public List<Factura> listarTodasLasFacturas() {
-        return facturaDAO.listarTodas();
+        return facturaDAO.listarTodasLasFacturas();
     }
 
     // READ - Buscar factura por ID

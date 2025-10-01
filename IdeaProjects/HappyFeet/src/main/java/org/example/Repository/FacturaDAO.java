@@ -38,7 +38,7 @@ public class FacturaDAO implements IFacturaDAO {
     }
 
     @Override
-    public List<Factura> listarTodas() {
+    public List<Factura> listarTodasLasFacturas() {
         List<Factura> facturas = new ArrayList<>();
         String sql = "SELECT id, dueno_id, fecha_emision, total FROM facturas ORDER BY fecha_emision DESC";
 
@@ -241,7 +241,6 @@ public Integer contarFacturasPorPeriodo(LocalDateTime fechaInicio, LocalDateTime
         }
     } catch (SQLException e) {
        
-        e.printStackTrace();
         return null; 
     }
 }

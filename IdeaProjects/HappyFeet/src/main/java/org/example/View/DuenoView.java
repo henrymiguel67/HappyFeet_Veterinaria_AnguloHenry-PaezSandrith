@@ -4,17 +4,20 @@ import org.example.controller.DuenoController;
 import org.example.model.entities.Dueno;
 import java.util.List;
 import java.util.Scanner;
+import org.example.Repository.DuenoRepositoryException;
 
 public class DuenoView {
     private final DuenoController duenoController;
     private final Scanner scanner;
     
-    public DuenoView() {
-        this.duenoController = new DuenoController();
+  
+    public DuenoView(DuenoController duenoController) {
+        this.duenoController = duenoController;
         this.scanner = new Scanner(System.in);
     }
-    
-    public void mostrarMenu() {
+
+
+    public void mostrarMenu() throws Exception {
         int opcion;
         do {
             System.out.println("\n=== GESTIÓN DE DUEÑOS ===");
@@ -28,25 +31,16 @@ public class DuenoView {
             scanner.nextLine(); // Limpiar el buffer
             
             switch (opcion) {
-                case 1:
-                    registrarDueno();
-                    break;
-                case 2:
-                    listarDuenos();
-                    break;
-                case 3:
-                    buscarDuenoPorId();
-                    break;
-                case 4:
-                    System.out.println("Saliendo del sistema...");
-                    break;
-                default:
-                    System.out.println("Opción no válida. Intente nuevamente.");
+                case 1 -> registrarDueno();
+                case 2 -> listarDuenos();
+                case 3 -> buscarDuenoPorId();
+                case 4 -> System.out.println("Saliendo del sistema...");
+                default -> System.out.println("Opción no válida. Intente nuevamente.");
             }
         } while (opcion != 4);
     }
     
-    public void registrarDueno() {
+    public void registrarDueno() throws Exception {
         System.out.println("\n=== REGISTRAR NUEVO DUEÑO ===");
         System.out.print("Ingrese el nombre del dueño: ");
         String nombre = scanner.nextLine();
@@ -72,7 +66,7 @@ public class DuenoView {
         System.out.println("Dueño registrado exitosamente!");
     }
     
-    public void listarDuenos() {
+    public void listarDuenos() throws DuenoRepositoryException {
         System.out.println("\n=== LISTA DE DUEÑOS ===");
         List<Dueno> duenos = duenoController.listarDuenos(); // Tipo genérico añadido
         
@@ -90,7 +84,7 @@ public class DuenoView {
         }
     }
     
-    public void buscarDuenoPorId() {
+    public void buscarDuenoPorId() throws DuenoRepositoryException {
         System.out.println("\n=== BUSCAR DUEÑO POR ID ===");
         System.out.print("Ingrese el ID del dueño: ");
         int id = scanner.nextInt(); // Cambiado de Long a int para coincidir con la clase Dueno

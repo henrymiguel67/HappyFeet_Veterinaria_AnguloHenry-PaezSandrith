@@ -22,7 +22,7 @@ public class InventarioController {
 try {
 // Validar datos antes (puedes usar tu método validarDatosProducto)
 if (!validarDatosProducto(nombreProducto, productoTipoId, cantidadStock, stockMinimo, precioVenta)) {
-logger.warning("❌ Datos inválidos para el producto: " + nombreProducto);
+logger.log(Level.WARNING, "\u274c Datos inv\u00e1lidos para el producto: {0}", nombreProducto);
 return false;
 }
 
@@ -39,11 +39,11 @@ Inventario producto = new Inventario.Builder()
 .build();
 
 inventarioService.agregarProducto(producto);
-logger.info("✅ Producto agregado exitosamente: " + nombreProducto);
+logger.log(Level.INFO, "\u2705 Producto agregado exitosamente: {0}", nombreProducto);
 return true;
 
 } catch (IllegalArgumentException e) {
-logger.warning("❌ Validación fallida al agregar producto: " + e.getMessage());
+logger.log(Level.WARNING, "\u274c Validaci\u00f3n fallida al agregar producto: {0}", e.getMessage());
 return false;
 
 } catch (Exception e) {
@@ -55,7 +55,7 @@ return false;
     public List<Inventario> listarTodosLosProductos() {
         try {
             List<Inventario> productos = inventarioService.listarTodosLosProductos();
-            logger.info("📋 Se listaron " + productos.size() + " productos");
+            logger.log(Level.INFO, "\ud83d\udccb Se listaron {0} productos", productos.size());
             return productos;
             
         } catch (Exception e) {
@@ -69,9 +69,9 @@ return false;
         try {
             Optional<Inventario> producto = inventarioService.buscarProductoPorId(id);
             if (producto.isPresent()) {
-                logger.info("🔍 Producto encontrado: " + producto.get().getNombreProducto());
+                logger.log(Level.INFO, "\ud83d\udd0d Producto encontrado: {0}", producto.get().getNombreProducto());
             } else {
-                logger.info("🔍 No se encontró producto con ID: " + id);
+                logger.log(Level.INFO, "\ud83d\udd0d No se encontr\u00f3 producto con ID: {0}", id);
             }
             return producto;
             
@@ -85,7 +85,7 @@ return false;
     public List<Inventario> buscarProductosPorNombre(String nombre) {
         try {
             List<Inventario> productos = inventarioService.buscarProductosPorNombre(nombre);
-            logger.info("🔎 Se encontraron " + productos.size() + " productos con nombre: " + nombre);
+            logger.log(Level.INFO, "\ud83d\udd0e Se encontraron {0} productos con nombre: {1}", new Object[]{productos.size(), nombre});
             return productos;
             
         } catch (Exception e) {
@@ -98,7 +98,7 @@ return false;
     public List<Inventario> buscarProductosConStockBajo() {
         try {
             List<Inventario> productos = inventarioService.buscarProductosConStockBajo();
-            logger.info("⚠️  Se encontraron " + productos.size() + " productos con stock bajo");
+            logger.log(Level.INFO, "\u26a0\ufe0f  Se encontraron {0} productos con stock bajo", productos.size());
             return productos;
             
         } catch (Exception e) {
@@ -111,7 +111,7 @@ return false;
     public List<Inventario> buscarProductosProximosAVencer(int dias) {
         try {
             List<Inventario> productos = inventarioService.buscarProductosProximosAVencer(dias);
-            logger.info("📅 Se encontraron " + productos.size() + " productos próximos a vencer en " + dias + " días");
+            logger.log(Level.INFO, "\ud83d\udcc5 Se encontraron {0} productos pr\u00f3ximos a vencer en {1} d\u00edas", new Object[]{productos.size(), dias});
             return productos;
             
         } catch (Exception e) {
@@ -124,7 +124,7 @@ return false;
     public List<Inventario> buscarProductosVencidos() {
         try {
             List<Inventario> productos = inventarioService.buscarProductosVencidos();
-            logger.info("🚫 Se encontraron " + productos.size() + " productos vencidos");
+            logger.log(Level.INFO, "\ud83d\udeab Se encontraron {0} productos vencidos", productos.size());
             return productos;
             
         } catch (Exception e) {
@@ -137,7 +137,7 @@ return false;
     public boolean actualizarStock(Integer id, Integer nuevaCantidad) {
         try {
             inventarioService.actualizarStock(id, nuevaCantidad);
-            logger.info("📦 Stock actualizado - Producto ID: " + id + " - Nuevo stock: " + nuevaCantidad);
+            logger.log(Level.INFO, "\ud83d\udce6 Stock actualizado - Producto ID: {0} - Nuevo stock: {1}", new Object[]{id, nuevaCantidad});
             return true;
             
         } catch (Exception e) {
@@ -150,7 +150,7 @@ return false;
     public boolean deducirStock(Integer id, Integer cantidad) {
         try {
             inventarioService.deducirStock(id, cantidad);
-            logger.info("➖ Stock deducido - Producto ID: " + id + " - Cantidad: " + cantidad);
+            logger.log(Level.INFO, "\u2796 Stock deducido - Producto ID: {0} - Cantidad: {1}", new Object[]{id, cantidad});
             return true;
             
         } catch (Exception e) {
@@ -163,7 +163,7 @@ return false;
     public boolean reponerStock(Integer id, Integer cantidad) {
         try {
             inventarioService.reponerStock(id, cantidad);
-            logger.info("➕ Stock repuesto - Producto ID: " + id + " - Cantidad: " + cantidad);
+            logger.log(Level.INFO, "\u2795 Stock repuesto - Producto ID: {0} - Cantidad: {1}", new Object[]{id, cantidad});
             return true;
             
         } catch (Exception e) {
@@ -198,7 +198,7 @@ return false;
     public double obtenerValorTotalInventario() {
         try {
             double valorTotal = inventarioService.obtenerValorTotalInventario();
-            logger.info("💰 Valor total del inventario: $" + valorTotal);
+            logger.log(Level.INFO, "\ud83d\udcb0 Valor total del inventario: ${0}", valorTotal);
             return valorTotal;
             
         } catch (Exception e) {
@@ -211,7 +211,7 @@ return false;
     public boolean verificarStockSuficiente(Integer id, Integer cantidadRequerida) {
         try {
             boolean suficiente = inventarioService.verificarStockSuficiente(id, cantidadRequerida);
-            logger.info("📦 Verificación de stock - Producto ID: " + id + " - Suficiente: " + suficiente);
+            logger.log(Level.INFO, "\ud83d\udce6 Verificaci\u00f3n de stock - Producto ID: {0} - Suficiente: {1}", new Object[]{id, suficiente});
             return suficiente;
             
         } catch (Exception e) {
@@ -236,10 +236,7 @@ return false;
             if (stockMinimo == null || stockMinimo < 0) {
                 return false;
             }
-            if (precioVenta == null || precioVenta < 0) {
-                return false;
-            }
-            return true;
+            return !(precioVenta == null || precioVenta < 0);
             
         } catch (Exception e) {
             logger.log(Level.SEVERE, "❌ Error en validación de datos de producto: " + e.getMessage(), e);

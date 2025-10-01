@@ -10,7 +10,7 @@ public interface IFacturaDAO {
 
     void generarFactura(Factura factura);
 
-    List<Factura> listarTodas();
+    List<Factura> listarTodasLasFacturas();
 
     Optional<Factura> buscarPorId(Integer id);
 

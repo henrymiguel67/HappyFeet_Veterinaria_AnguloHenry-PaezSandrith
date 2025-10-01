@@ -7,7 +7,7 @@ import org.example.Repository.ItemsFacturaException;
 import java.util.List;
 
 public class ItemsFacturaService {
-    private ItemsFacturaDAO itemsFacturaDAO;
+    private final ItemsFacturaDAO itemsFacturaDAO;
     
     public ItemsFacturaService() {
         this.itemsFacturaDAO = new ItemsFacturaDAO();

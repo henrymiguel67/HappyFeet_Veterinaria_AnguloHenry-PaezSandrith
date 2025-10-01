@@ -1,10 +1,10 @@
 package org.example.controller;
 
 import org.example.model.entities.Dueno;
+import org.example.Repository.IDuenoDAO;
+import org.example.Repository.DuenoRepositoryException;
 
 import java.util.List;
-
-import org.example.Repository.IDuenoDAO;
 
 public record DuenoController(IDuenoDAO duenoDAO) {
 
@@ -22,43 +22,50 @@ public record DuenoController(IDuenoDAO duenoDAO) {
                 dueno.getTelefono() != null && !dueno.getTelefono().isEmpty();
     }
 
-    public void crear() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'crear'");
+    public void crear(Dueno dueno) throws Exception {
+        agregarDueno(dueno);
     }
 
-    public void listar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listar'");
+    public List<Dueno> listar() throws DuenoRepositoryException {
+        return duenoDAO.listarTodos();
     }
 
-    public void actualizar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'actualizar'");
+    public void actualizar(Dueno dueno) throws DuenoRepositoryException {
+        if (dueno.getId() <= 0) {
+            throw new IllegalArgumentException("ID de dueño inválido para actualizar.");
+        }
+        if (!validarDueno(dueno)) {
+            throw new IllegalArgumentException("Datos del dueño inválidos.");
+        }
+        duenoDAO.actualizarDueno(dueno);
     }
 
-    public void eliminar() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'eliminar'");
+    public void eliminar(int id) throws DuenoRepositoryException {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID inválido.");
+        }
+        duenoDAO.eliminarDueno(id);
     }
 
-    public void buscarPorCriterio() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarPorCriterio'");
+    public List<Dueno> buscarPorCriterio(String criterio) throws DuenoRepositoryException {
+        if (criterio == null || criterio.trim().isEmpty()) {
+            throw new IllegalArgumentException("Criterio de búsqueda inválido.");
+        }
+        return duenoDAO.buscarPorNombreOTelefono(criterio);
     }
 
-    public Dueno buscarDuenoPorId(int id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'buscarDuenoPorId'");
+    public Dueno buscarDuenoPorId(int id) throws DuenoRepositoryException {
+        if (id <= 0) {
+            throw new IllegalArgumentException("ID inválido.");
+        }
+        return duenoDAO.buscarPorId(id);
     }
 
-    public void registrarDueno(Dueno nuevoDueno) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'registrarDueno'");
+    public void registrarDueno(Dueno nuevoDueno) throws Exception {
+        agregarDueno(nuevoDueno);
     }
 
-    public List<Dueno> listarDuenos() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'listarDuenos'");
+    public List<Dueno> listarDuenos() throws DuenoRepositoryException {
+        return listar();
     }
 }
