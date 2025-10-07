@@ -139,3 +139,5 @@ mvn clean package
 ✅ Código mantenible y documentado
 
 ✅ Base de datos relacional optimizada
+
+## se añadio los archivos exporthistorialmedico 
