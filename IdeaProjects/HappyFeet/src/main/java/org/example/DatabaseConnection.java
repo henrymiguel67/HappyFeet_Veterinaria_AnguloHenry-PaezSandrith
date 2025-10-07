@@ -15,7 +15,7 @@ public class DatabaseConnection {
     private static DatabaseConnection instance;
     private Connection connection;
 
-    private static final String URL = "jdbc:mysql://localhost:3306/happyfeet_database";
+    private static final String URL = "jdbc:mysql://localhost:3306/HappyFeet";
     private static final String USER = "campus2023";
     private static final String PASSWORD = "campus2023";
 

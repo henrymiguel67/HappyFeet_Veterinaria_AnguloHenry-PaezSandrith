@@ -3,6 +3,10 @@ package org.example.model.entities;
 import java.util.Date;
 
 public class HistorialMedico {
+
+    public static int valueOf(int mascotaId) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
     // Atributos PRIVADOS (encapsulación)
     private int id;
     private int mascotaId;

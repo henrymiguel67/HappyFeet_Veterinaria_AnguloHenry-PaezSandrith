@@ -9,7 +9,7 @@ import java.util.Objects;
 /**
  * Enhanced Invoice class with validation, builder pattern, and additional features
  */
-public class Factura {
+public final class Factura {
     private Integer id;
     private Integer duenoId;
     private LocalDateTime fechaEmision;

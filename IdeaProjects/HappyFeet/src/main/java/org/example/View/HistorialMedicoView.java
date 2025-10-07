@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class HistorialMedicoView {
-    private HistorialMedicoController historialController;
-    private Scanner scanner;
+    private final HistorialMedicoController historialController;
+    private final Scanner scanner;
     
     public HistorialMedicoView() {
         this.historialController = new HistorialMedicoController();
