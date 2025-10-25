@@ -4,10 +4,17 @@
  */
 package org.example.Repository;
 
+import org.example.model.entities.HistorialMedico;
+
 /**
  *
  * @author camper
  */
 class IExportarHistorialMedico {
+
+    public void Exportar(HistorialMedico historial) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'Exportar'");
+    }
     
 }
